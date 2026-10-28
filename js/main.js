@@ -52,8 +52,12 @@
       : "",
     email: has(cfg.contacto && cfg.contacto.email) ? "mailto:" + cfg.contacto.email : "",
     instagram: has(cfg.redes && cfg.redes.instagram) ? cfg.redes.instagram : "",
-    reservas: has(cfg.reservas) ? cfg.reservas : "",
+    tiktok: has(cfg.redes && cfg.redes.tiktok) ? cfg.redes.tiktok : "",
+    reservas: "",
   };
+
+  if (has(cfg.reservas)) enlaces.reservas = cfg.reservas;
+  else if (cfg.reservasPorTelefono && has(enlaces.telefono)) enlaces.reservas = enlaces.telefono;
 
   var delivery = PLATAFORMAS.filter(function (p) {
     return has(cfg.pedidos && cfg.pedidos[p.clave]);
@@ -70,6 +74,8 @@
     whatsapp: has(enlaces.whatsapp),
     email: has(enlaces.email),
     instagram: has(enlaces.instagram),
+    tiktok: has(enlaces.tiktok),
+    eventos: cfg.eventosPrivados === true,
     reservas: has(enlaces.reservas),
     terraza: cfg.terraza === true,
   };
@@ -140,6 +146,7 @@
     var metro = cfg.metro || {};
     var textos = {
       nombre: cfg.nombre,
+      lema: cfg.lema,
       direccion: [cfg.direccion && cfg.direccion.calle, cfg.direccion && cfg.direccion.barrio, cfg.direccion && cfg.direccion.ciudad]
         .filter(has)
         .join(" · "),
@@ -268,6 +275,7 @@
       "@type": "Restaurant",
       name: cfg.nombre,
       description: cfg.descripcion,
+      slogan: cfg.lema,
       servesCuisine: cfg.tipoCocina,
       address: {
         "@type": "PostalAddress",
@@ -288,7 +296,7 @@
     if (has(cfg.contacto && cfg.contacto.telefono)) datos.telephone = cfg.contacto.telefono;
     if (has(cfg.contacto && cfg.contacto.email)) datos.email = cfg.contacto.email;
     if (disponibles.instagram) datos.sameAs = [enlaces.instagram];
-    if (disponibles.reservas) datos.acceptsReservations = enlaces.reservas;
+    if (disponibles.reservas) datos.acceptsReservations = has(cfg.reservas) ? cfg.reservas : true;
 
     var porFranja = {};
     DIAS.forEach(function (dia) {

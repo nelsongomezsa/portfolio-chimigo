@@ -4,7 +4,8 @@
  * oculta todo lo que dependa de él (botones, enlaces, datos estructurados…).
  */
 window.CHIMIGO = {
-  nombre: "Chimi Go",
+  nombre: "ChimiGO Urban Food",
+  lema: "Chimi · Fútbol · Música",
   descripcion:
     "Comida callejera dominicana en Cuatro Caminos, Madrid: chimis, quipes, chicharrón con yuca y batidos naturales.",
   tipoCocina: "Dominicana",
@@ -16,7 +17,7 @@ window.CHIMIGO = {
     calle: "Avenida Reina Victoria, 17",
     barrio: "Cuatro Caminos",
     ciudad: "Madrid",
-    codigoPostal: "",
+    codigoPostal: "28003",
     pais: "ES",
   },
 
@@ -40,13 +41,14 @@ window.CHIMIGO = {
   },
 
   contacto: {
-    telefono: "", // Formato internacional: "+34 600 000 000"
+    telefono: "+34 911 349 551",
     whatsapp: "", // Formato internacional, sirve con o sin espacios: "+34 600 000 000"
     email: "",
   },
 
   redes: {
     instagram: "https://www.instagram.com/chimi.go/",
+    tiktok: "https://www.tiktok.com/@chimigo.urban.foo", // pendiente de confirmar usuario
   },
 
   // Enlaces directos a la ficha del local en cada plataforma.
@@ -58,4 +60,8 @@ window.CHIMIGO = {
 
   // Enlace a la página de reservas (TheFork, CoverManager, formulario propio…).
   reservas: "",
+  // Si no hay enlace de reservas, el botón "Reservar" llama al teléfono.
+  reservasPorTelefono: true,
+
+  eventosPrivados: true,
 };

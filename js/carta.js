@@ -433,7 +433,7 @@
     var alternativa = $("[data-carrito-alternativa]", carrito);
     if (!has(enlaces.whatsapp)) {
       alternativa.hidden = false;
-      if (!has(enlaces.instagram)) alternativa.textContent = "Pide en el local.";
+      pintarAlternativa(alternativa);
     }
 
     $("[data-carrito-ver-menu]", carrito).addEventListener("click", function () {
@@ -450,6 +450,29 @@
 
     prepararDialogo(carrito);
     pintarCarrito();
+  }
+
+  // "Pide en el local, llamando al … o por Instagram", según los datos que haya.
+  function pintarAlternativa(p) {
+    var opciones = [];
+    if (has(enlaces.telefono)) {
+      var tel = crear("a", "", cfg.contacto.telefono.replace(/^\+34\s*/, ""));
+      tel.href = enlaces.telefono;
+      opciones.push([document.createTextNode("llamando al "), tel]);
+    }
+    if (has(enlaces.instagram)) {
+      var ig = crear("a", "", "Instagram");
+      ig.href = enlaces.instagram;
+      ig.target = "_blank";
+      ig.rel = "noopener noreferrer";
+      opciones.push([document.createTextNode("por "), ig]);
+    }
+    p.replaceChildren(document.createTextNode("Pide en el local"));
+    opciones.forEach(function (o, i) {
+      p.append(document.createTextNode(i === 0 ? ", " : " o "));
+      p.append.apply(p, o);
+    });
+    p.append(document.createTextNode("."));
   }
 
   // ---------- Arranque ----------

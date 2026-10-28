@@ -42,9 +42,9 @@ textarea {
 }
 
 :root {
-  --color-primary: #d9480f;
-  --color-primary-dark: #a8360a;
-  --color-primary-deep: #c2410c;
+  --color-primary: #d62828;
+  --color-primary-dark: #9b1515;
+  --color-primary-deep: #b91c1c;
   --color-secondary: #ffb703;
   --color-dark: #241c15;
   --color-light: #fff8f0;
@@ -349,6 +349,7 @@ main:focus {
 .about,
 .menu,
 .order,
+.events,
 .location,
 .contact {
   padding: 5rem 0;
@@ -558,7 +559,7 @@ main:focus {
 
 .menu-media--cat1 .menu-media-marcador {
   background:
-    radial-gradient(circle at 85% 20%, rgba(217, 72, 15, 0.8) 0 18%, transparent 18.5%),
+    radial-gradient(circle at 85% 20%, rgba(214, 40, 40, 0.85) 0 18%, transparent 18.5%),
     radial-gradient(circle at 70% 45%, rgba(255, 183, 3, 0.16) 0 30%, transparent 30.5%),
     linear-gradient(135deg, #3b2a1d, var(--color-dark));
 }
@@ -567,8 +568,8 @@ main:focus {
   color: var(--color-dark);
   background:
     radial-gradient(circle at 85% 20%, rgba(255, 248, 240, 0.7) 0 18%, transparent 18.5%),
-    radial-gradient(circle at 70% 45%, rgba(217, 72, 15, 0.16) 0 30%, transparent 30.5%),
-    linear-gradient(135deg, var(--color-secondary), #fb8500);
+    radial-gradient(circle at 70% 45%, rgba(185, 28, 28, 0.14) 0 30%, transparent 30.5%),
+    linear-gradient(135deg, #ffc93c, var(--color-secondary));
 }
 
 .menu-media--foto .menu-media-marcador {
@@ -1022,6 +1023,39 @@ dialog::backdrop {
   gap: 0.8rem;
 }
 
+.events {
+  background-color: var(--color-dark);
+  color: var(--color-light);
+}
+
+.events-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem 3rem;
+}
+
+.events h2 {
+  font-size: 2rem;
+  color: var(--color-secondary);
+  margin-bottom: 0.6rem;
+}
+
+.events p {
+  max-width: 560px;
+}
+
+.events-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+
+.events :focus-visible {
+  outline-color: var(--color-secondary);
+}
+
 .location-inner {
   display: flex;
   flex-wrap: wrap;
@@ -1235,9 +1269,16 @@ dialog::backdrop {
   .about,
   .menu,
   .order,
+  .events,
   .location,
   .contact {
     padding: 3.5rem 0;
+  }
+
+  .events-actions,
+  .events-actions li,
+  .events-actions .btn {
+    width: 100%;
   }
 
   .location-inner {
@@ -1309,10 +1350,6 @@ dialog::backdrop {
 @media (max-width: 480px) {
   .container {
     padding: 0 1rem;
-  }
-
-  .hero-eyebrow-extra {
-    display: none;
   }
 
   .menu-grid {

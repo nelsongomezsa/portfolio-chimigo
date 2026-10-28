@@ -4,15 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <script>document.documentElement.classList.replace('no-js', 'js');</script>
-  <title>Chimi Go | Comida callejera dominicana en Cuatro Caminos, Madrid</title>
-  <meta name="description" content="Chimi Go, comida callejera dominicana en Cuatro Caminos, Madrid. Chimis, quipes, chicharrón con yuca y batidos naturales en la Avenida Reina Victoria, 17. Con terraza.">
-  <meta name="author" content="Chimi Go">
-  <meta name="theme-color" content="#d9480f">
+  <title>ChimiGO Urban Food | Comida callejera dominicana en Cuatro Caminos, Madrid</title>
+  <meta name="description" content="ChimiGO Urban Food: chimi, fútbol y música en Cuatro Caminos, Madrid. Chimis, quipes, chicharrón con yuca y batidos naturales en la Avenida Reina Victoria, 17. Con terraza.">
+  <meta name="author" content="ChimiGO Urban Food">
+  <meta name="theme-color" content="#b91c1c">
 
   <meta property="og:type" content="restaurant">
   <meta property="og:locale" content="es_ES">
-  <meta property="og:site_name" content="Chimi Go">
-  <meta property="og:title" content="Chimi Go | Comida callejera dominicana en Cuatro Caminos">
+  <meta property="og:site_name" content="ChimiGO Urban Food">
+  <meta property="og:title" content="ChimiGO Urban Food | Chimi · Fútbol · Música en Cuatro Caminos">
   <meta property="og:description" content="El auténtico chimi dominicano en la Avenida Reina Victoria, 17 (Madrid). Chimis, quipes, chicharrón con yuca y batidos naturales.">
   <meta name="twitter:card" content="summary">
 
@@ -35,13 +35,14 @@
 
   <header class="site-header">
     <div class="container header-inner">
-      <a href="#inicio" class="logo" aria-label="Chimi Go, ir al inicio">Chimi<span>Go</span></a>
+      <a href="#inicio" class="logo" aria-label="ChimiGO Urban Food, ir al inicio">Chimi<span>GO</span></a>
 
       <nav class="main-nav" id="menu-principal" aria-label="Principal">
         <ul>
           <li><a href="#inicio">Inicio</a></li>
           <li><a href="#nosotros">Nosotros</a></li>
           <li><a href="#menu">Menú</a></li>
+          <li data-requiere="eventos"><a href="#eventos">Eventos</a></li>
           <li><a href="#ubicacion">Ubicación</a></li>
           <li><a href="#contacto">Contacto</a></li>
         </ul>
@@ -60,14 +61,14 @@
 
     <section id="inicio" class="hero">
       <div class="container hero-content">
-        <p class="hero-eyebrow">Comida callejera dominicana<span class="hero-eyebrow-extra"> · Cuatro Caminos</span></p>
+        <p class="hero-eyebrow" data-cfg-contenedor><span data-cfg="lema">Chimi · Fútbol · Música</span></p>
         <h1>El auténtico chimi dominicano, en el corazón de Cuatro Caminos</h1>
         <p class="hero-lead">Sabor de calle, receta de siempre. Descubre por qué somos el rinconcito dominicano favorito de Madrid.</p>
 
         <div class="hero-actions">
           <a href="#menu" class="btn btn-primary">Ver el menú</a>
           <a href="#pedir" class="btn btn-light" data-requiere="pedir" hidden>Pedir</a>
-          <a href="https://www.google.com/maps/dir/?api=1&amp;destination=Chimi%20Go%2C%20Avenida%20Reina%20Victoria%2C%2017%2C%20Madrid" class="btn btn-outline" data-href="llegar" data-requiere="llegar" target="_blank" rel="noopener noreferrer">Cómo llegar</a>
+          <a href="https://www.google.com/maps/dir/?api=1&amp;destination=ChimiGO%20Urban%20Food%2C%20Avenida%20Reina%20Victoria%2C%2017%2C%2028003%20Madrid" class="btn btn-outline" data-href="llegar" data-requiere="llegar" target="_blank" rel="noopener noreferrer">Cómo llegar</a>
         </div>
 
         <ul class="hero-facts">
@@ -83,14 +84,14 @@
         <h2>Sobre nosotros</h2>
         <p>
           El chimi nació en las calles de República Dominicana, inspirado en el choripán argentino, y con
-          el tiempo se convirtió en el bocadillo callejero más querido del país. En Chimi Go lo hacemos tal
+          el tiempo se convirtió en el bocadillo callejero más querido del país. En ChimiGO lo hacemos tal
           como se vive allá: pan tostado, carne bien sazonada a la parrilla, ensalada de col fresca y
           nuestras salsas de la casa.
         </p>
         <p>
           Somos uno de los primeros locales especializados en chimi de Madrid y el punto de encuentro de
           la comunidad dominicana en Cuatro Caminos. Terraza, ambiente familiar y mucho sabor: así es
-          Chimi Go.
+          ChimiGO.
         </p>
       </div>
     </section>
@@ -121,10 +122,26 @@
           <div class="order-group" data-requiere="reservas">
             <h3>Reservar mesa</h3>
             <ul class="order-links">
-              <li><a class="btn btn-primary" data-href="reservas" target="_blank" rel="noopener noreferrer">Reservar</a></li>
+              <li><a class="btn btn-primary" data-href="reservas">Reservar</a></li>
             </ul>
           </div>
         </div>
+      </div>
+    </section>
+
+    <section id="eventos" class="events" data-requiere="eventos">
+      <div class="container events-inner">
+        <div>
+          <h2>Eventos privados</h2>
+          <p>
+            ¿Un cumpleaños, una quedada en grupo o el partido con los tuyos? Celebra tu evento privado en
+            ChimiGO. Llámanos o escríbenos por Instagram y lo preparamos contigo.
+          </p>
+        </div>
+        <ul class="events-actions">
+          <li data-requiere="telefono" hidden><a class="btn btn-primary" data-href="telefono">Llamar</a></li>
+          <li data-requiere="instagram"><a class="btn btn-outline" data-href="instagram" href="https://www.instagram.com/chimi.go/" target="_blank" rel="noopener noreferrer">Escríbenos en Instagram</a></li>
+        </ul>
       </div>
     </section>
 
@@ -143,13 +160,13 @@
           </div>
           <p data-requiere="terraza">Contamos con terraza para disfrutar del chimi al aire libre.</p>
           <p class="location-actions">
-            <a href="https://www.google.com/maps/dir/?api=1&amp;destination=Chimi%20Go%2C%20Avenida%20Reina%20Victoria%2C%2017%2C%20Madrid" class="btn btn-primary" data-href="llegar" data-requiere="llegar" target="_blank" rel="noopener noreferrer">Cómo llegar</a>
+            <a href="https://www.google.com/maps/dir/?api=1&amp;destination=ChimiGO%20Urban%20Food%2C%20Avenida%20Reina%20Victoria%2C%2017%2C%2028003%20Madrid" class="btn btn-primary" data-href="llegar" data-requiere="llegar" target="_blank" rel="noopener noreferrer">Cómo llegar</a>
             <a class="btn btn-secondary" data-href="telefono" data-requiere="telefono" hidden>Llamar</a>
           </p>
         </div>
         <div class="location-map">
           <iframe
-            title="Mapa de ubicación de Chimi Go en Cuatro Caminos, Madrid"
+            title="Mapa de ubicación de ChimiGO Urban Food en Cuatro Caminos, Madrid"
             src="https://www.google.com/maps?q=Avenida+Reina+Victoria+17+Madrid&amp;output=embed"
             data-mapa
             width="600"
@@ -190,9 +207,10 @@
 
   <footer class="site-footer">
     <div class="container footer-inner">
-      <p>&copy; <span data-anio>2026</span> <span data-cfg="nombre">Chimi Go</span>. Todos los derechos reservados.</p>
+      <p>&copy; <span data-anio>2026</span> <span data-cfg="nombre">ChimiGO Urban Food</span>. Todos los derechos reservados.</p>
       <ul class="social-links">
         <li data-requiere="instagram"><a data-href="instagram" href="https://www.instagram.com/chimi.go/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+        <li data-requiere="tiktok" hidden><a data-href="tiktok" target="_blank" rel="noopener noreferrer">TikTok</a></li>
       </ul>
     </div>
   </footer>
@@ -278,7 +296,7 @@
       <svg aria-hidden="true" viewBox="0 0 24 24" width="22" height="22"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a1 1 0 0 1-1 1A16 16 0 0 1 4 5a1 1 0 0 1 1-1Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
       Llamar
     </a>
-    <a href="https://www.google.com/maps/dir/?api=1&amp;destination=Chimi%20Go%2C%20Avenida%20Reina%20Victoria%2C%2017%2C%20Madrid" class="mobile-bar-item" data-href="llegar" data-requiere="llegar" target="_blank" rel="noopener noreferrer">
+    <a href="https://www.google.com/maps/dir/?api=1&amp;destination=ChimiGO%20Urban%20Food%2C%20Avenida%20Reina%20Victoria%2C%2017%2C%2028003%20Madrid" class="mobile-bar-item" data-href="llegar" data-requiere="llegar" target="_blank" rel="noopener noreferrer">
       <svg aria-hidden="true" viewBox="0 0 24 24" width="22" height="22"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21Z" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="9.5" r="2.5" fill="none" stroke="currentColor" stroke-width="2"/></svg>
       Cómo llegar
     </a>
