@@ -6,9 +6,13 @@
   var utils = window.ChimiGo || {};
   var has = utils.has;
   var enlaces = utils.enlaces || {};
+  var i18n = window.ChimiGoI18n;
+  var t = i18n.t;
 
   var CLAVE_GUARDADO = "chimigo-carrito";
   var MAX_CANTIDAD = 20;
+  var TODO = "*";
+  // El mensaje de WhatsApp va siempre en español, que es como lo lee el local.
   var MODOS = { recoger: "Para recoger", local: "Para tomar en el local" };
 
   var formatoPrecio = new Intl.NumberFormat("es-ES", { style: "currency", currency: "EUR" });
@@ -38,6 +42,14 @@
     return el;
   }
 
+  function nombreCategoria(c) {
+    return (i18n.idioma() === "en" && carta.categoriasEn && carta.categoriasEn[c]) || c;
+  }
+
+  function nombreExtra(e) {
+    return i18n.campo(e, "nombre");
+  }
+
   function reduceMovimiento() {
     return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   }
@@ -61,7 +73,7 @@
     var figura = crear("div", "menu-media menu-media--cat" + categoria + (grande ? " menu-media--grande" : ""));
     var marcador = crear("div", "menu-media-marcador");
     marcador.setAttribute("aria-hidden", "true");
-    marcador.append(crear("span", "menu-media-cat", plato.categoria), crear("span", "menu-media-nombre", plato.nombre));
+    marcador.append(crear("span", "menu-media-cat", nombreCategoria(plato.categoria)), crear("span", "menu-media-nombre", plato.nombre));
     figura.append(marcador);
 
     var foto = plato.foto;
@@ -141,9 +153,19 @@
     }, plato.precio);
   }
 
-  function nombreLinea(l) {
+  // enEspanol: para el mensaje de WhatsApp, que siempre va en español.
+  function nombreLinea(l, enEspanol) {
     if (!l.extras.length) return l.plato.nombre;
-    return l.plato.nombre + " (+ " + l.extras.map(function (e) { return e.nombre; }).join(", ") + ")";
+    return (
+      l.plato.nombre +
+      " (+ " +
+      l.extras
+        .map(function (e) {
+          return enEspanol ? e.nombre : nombreExtra(e);
+        })
+        .join(", ") +
+      ")"
+    );
   }
 
   function lineas() {
@@ -181,7 +203,7 @@
     var k = clave(id, idsExtras);
     fijarCantidad(k, (estado.lineas[k] || 0) + cantidad);
     var d = desdeClave(k);
-    anunciar("Añadido: " + cantidad + " × " + nombreLinea(d) + ". Total del pedido: " + precio(resumen().total));
+    anunciar(t("carrito.anunciado", { cantidad: cantidad, nombre: nombreLinea(d), total: precio(resumen().total) }));
     animarBoton();
   }
 
@@ -191,7 +213,7 @@
     var r = resumen();
     var texto = ["¡Hola, " + (cfg.nombre || "") + "! Quiero hacer un pedido:", ""];
     lineas().forEach(function (l) {
-      texto.push("• " + l.cantidad + " × " + nombreLinea(l) + " — " + precio(l.subtotal));
+      texto.push("• " + l.cantidad + " × " + nombreLinea(l, true) + " — " + precio(l.subtotal));
     });
     texto.push("", "Total orientativo: " + precio(r.total));
     texto.push("Modalidad: " + MODOS[estado.modo]);
@@ -219,7 +241,7 @@
     var abrir = crear("button", "menu-card-open");
     abrir.type = "button";
     abrir.setAttribute("aria-haspopup", "dialog");
-    abrir.append(crear("span", "visually-hidden", "Ver ficha de "), document.createTextNode(plato.nombre));
+    abrir.append(crear("span", "visually-hidden", t("carta.verFicha")), document.createTextNode(plato.nombre));
     abrir.addEventListener("click", function () {
       abrirFicha(plato);
     });
@@ -230,19 +252,21 @@
     var cuerpo = crear("div", "menu-card-body");
     if (plato.etiquetas && plato.etiquetas.length) {
       var etiquetas = crear("ul", "menu-tags");
-      plato.etiquetas.forEach(function (t) {
-        etiquetas.append(crear("li", "", t));
+      plato.etiquetas.forEach(function (etiqueta) {
+        var texto = i18n.idioma() === "en" ? t("etiqueta." + etiqueta) : etiqueta;
+        etiquetas.append(crear("li", "", texto));
       });
       cuerpo.append(etiquetas);
     }
     cuerpo.append(titulo);
-    if (plato.descripcion) cuerpo.append(crear("p", "", plato.descripcion));
+    var descripcion = i18n.campo(plato, "descripcion");
+    if (descripcion) cuerpo.append(crear("p", "", descripcion));
 
     var pie = crear("div", "menu-card-foot");
     var boton = crear("button", "btn btn-primary btn-small btn-add");
     boton.type = "button";
-    boton.innerHTML = '<span aria-hidden="true">+</span> Añadir';
-    boton.setAttribute("aria-label", "Añadir " + plato.nombre + " al pedido");
+    textoBoton(boton, "+", t("carta.anadir"));
+    boton.setAttribute("aria-label", t("carta.anadirAria", { nombre: plato.nombre }));
     boton.addEventListener("click", function () {
       anadir(plato.id, [], 1);
       confirmar(boton);
@@ -253,15 +277,21 @@
     return articulo;
   }
 
+  function textoBoton(boton, simbolo, texto) {
+    var icono = crear("span", "", simbolo);
+    icono.setAttribute("aria-hidden", "true");
+    boton.replaceChildren(icono, document.createTextNode(" " + texto));
+  }
+
   function confirmar(boton) {
     boton.classList.remove("is-added");
     void boton.offsetWidth;
     boton.classList.add("is-added");
-    boton.innerHTML = '<span aria-hidden="true">✓</span> Añadido';
+    textoBoton(boton, "✓", t("carta.anadido"));
     clearTimeout(boton._t);
     boton._t = setTimeout(function () {
       boton.classList.remove("is-added");
-      boton.innerHTML = '<span aria-hidden="true">+</span> Añadir';
+      textoBoton(boton, "+", t("carta.anadir"));
     }, 1400);
   }
 
@@ -277,21 +307,24 @@
       platos.forEach(function (p) {
         rejilla.append(tarjeta(p));
       });
-      seccion.append(crear("h3", "menu-category-title", nombre), rejilla);
+      seccion.append(crear("h3", "menu-category-title", nombreCategoria(nombre)), rejilla);
       lista.append(seccion);
     });
   }
 
   function filtrar(categoria) {
     lista.querySelectorAll(".menu-category").forEach(function (s) {
-      s.hidden = categoria !== "Todo" && s.dataset.categoria !== categoria;
+      s.hidden = categoria !== TODO && s.dataset.categoria !== categoria;
     });
   }
 
+  var pestanaActiva = 0;
+
   function pintarPestanas() {
-    var nombres = ["Todo"].concat(carta.categorias);
+    var nombres = [TODO].concat(carta.categorias);
     var botones = nombres.map(function (nombre, i) {
-      var b = crear("button", "menu-tab", nombre);
+      var b = crear("button", "menu-tab", nombre === TODO ? t("carta.todo") : nombreCategoria(nombre));
+      b.dataset.categoria = nombre;
       b.type = "button";
       b.id = "pestana-" + i;
       b.setAttribute("role", "tab");
@@ -307,7 +340,8 @@
         o.tabIndex = activo ? 0 : -1;
       });
       lista.setAttribute("aria-labelledby", b.id);
-      filtrar(b.textContent);
+      pestanaActiva = botones.indexOf(b);
+      filtrar(b.dataset.categoria);
       if (enfocar) b.focus();
     }
 
@@ -323,7 +357,7 @@
       });
     });
 
-    seleccionar(botones[0], false);
+    seleccionar(botones[pestanaActiva] || botones[0], false);
   }
 
   // ---------- Ficha del plato ----------
@@ -344,7 +378,7 @@
     $("[data-ficha-menos]", ficha).disabled = fichaCantidad <= 1;
     $("[data-ficha-mas]", ficha).disabled = fichaCantidad >= MAX_CANTIDAD;
     $("[data-ficha-precio]", ficha).textContent = precio(unidad);
-    $("[data-ficha-anadir]", ficha).textContent = "Añadir · " + precio(unidad * fichaCantidad);
+    $("[data-ficha-anadir]", ficha).textContent = t("ficha.anadirPrecio", { precio: precio(unidad * fichaCantidad) });
   }
 
   function pintarExtras(plato) {
@@ -359,7 +393,7 @@
       casilla.type = "checkbox";
       casilla.value = e.id;
       casilla.addEventListener("change", pintarFicha);
-      etiqueta.append(casilla, crear("span", "dish-extra-name", e.nombre), crear("span", "dish-extra-price", "+ " + precio(e.precio)));
+      etiqueta.append(casilla, crear("span", "dish-extra-name", nombreExtra(e)), crear("span", "dish-extra-price", "+ " + precio(e.precio)));
       contenedor.append(etiqueta);
     });
   }
@@ -369,15 +403,16 @@
     fichaCantidad = 1;
     foco = document.activeElement;
     $("[data-ficha-media]", ficha).replaceChildren(media(plato, true));
-    $("[data-ficha-cat]", ficha).textContent = plato.categoria;
+    var descripcion = i18n.campo(plato, "descripcion");
+    $("[data-ficha-cat]", ficha).textContent = nombreCategoria(plato.categoria);
     $("[data-ficha-nombre]", ficha).textContent = plato.nombre;
-    $("[data-ficha-desc]", ficha).textContent = plato.descripcion;
-    $("[data-ficha-desc]", ficha).hidden = !plato.descripcion;
+    $("[data-ficha-desc]", ficha).textContent = descripcion;
+    $("[data-ficha-desc]", ficha).hidden = !descripcion;
     pintarExtras(plato);
     $("[data-ficha-alergenos]", ficha).textContent =
       plato.alergenos && plato.alergenos.length
-        ? "Alérgenos: " + plato.alergenos.join(", ") + "."
-        : "Consulta los alérgenos en el local.";
+        ? t("carta.alergenos", { lista: plato.alergenos.join(", ") })
+        : t("carta.alergenosConsulta");
     pintarFicha();
     ficha.showModal();
   }
@@ -426,12 +461,12 @@
   function pintarCarrito() {
     var r = resumen();
     var vacio = r.cantidad === 0;
-    var etiquetaCuenta = r.cantidad + (r.cantidad === 1 ? " producto" : " productos");
+    var etiquetaCuenta = t(r.cantidad === 1 ? "carrito.producto" : "carrito.productos", { n: r.cantidad });
 
     fab.hidden = vacio;
     $("[data-fab-cuenta]", fab).textContent = r.cantidad;
     $("[data-fab-total]", fab).textContent = precio(r.total);
-    fab.setAttribute("aria-label", "Ver tu pedido: " + etiquetaCuenta + ", " + precio(r.total));
+    fab.setAttribute("aria-label", t("carrito.verPedido", { cuenta: etiquetaCuenta, total: precio(r.total) }));
 
     $("[data-carrito-vacio]", carrito).hidden = !vacio;
     $("[data-carrito-opciones]", carrito).hidden = vacio;
@@ -447,16 +482,16 @@
       var nombre = nombreLinea(l);
       info.append(crear("span", "cart-line-name", l.plato.nombre));
       if (l.extras.length) {
-        info.append(crear("span", "cart-line-extras", "+ " + l.extras.map(function (e) { return e.nombre; }).join(", ")));
+        info.append(crear("span", "cart-line-extras", "+ " + l.extras.map(nombreExtra).join(", ")));
       }
-      info.append(crear("span", "cart-line-unit", precio(l.unidad) + " / ud."));
+      info.append(crear("span", "cart-line-unit", t("carrito.unidad", { precio: precio(l.unidad) })));
 
       var cantidad = crear("div", "qty qty--small");
       cantidad.setAttribute("role", "group");
-      cantidad.setAttribute("aria-label", "Cantidad de " + nombre);
+      cantidad.setAttribute("aria-label", t("carrito.cantidadDe", { nombre: nombre }));
       var menos = crear("button", "qty-btn", "−");
       menos.type = "button";
-      menos.setAttribute("aria-label", "Quitar una unidad de " + nombre);
+      menos.setAttribute("aria-label", t("carrito.menos", { nombre: nombre }));
       menos.addEventListener("click", function () {
         fijarCantidad(l.clave, l.cantidad - 1);
         devolverFoco(l.clave, "menos");
@@ -464,7 +499,7 @@
       var mas = crear("button", "qty-btn", "+");
       mas.type = "button";
       mas.disabled = l.cantidad >= MAX_CANTIDAD;
-      mas.setAttribute("aria-label", "Añadir una unidad de " + nombre);
+      mas.setAttribute("aria-label", t("carrito.mas", { nombre: nombre }));
       mas.addEventListener("click", function () {
         fijarCantidad(l.clave, l.cantidad + 1);
         devolverFoco(l.clave, "mas");
@@ -473,12 +508,12 @@
       mas.dataset.foco = l.clave + "-mas";
       cantidad.append(menos, crear("span", "qty-value", String(l.cantidad)), mas);
 
-      var quitar = crear("button", "cart-line-remove", "Quitar");
+      var quitar = crear("button", "cart-line-remove", t("carrito.quitar"));
       quitar.type = "button";
-      quitar.setAttribute("aria-label", "Quitar " + nombre + " del pedido");
+      quitar.setAttribute("aria-label", t("carrito.quitarAria", { nombre: nombre }));
       quitar.addEventListener("click", function () {
         fijarCantidad(l.clave, 0);
-        anunciar(nombre + " quitado del pedido");
+        anunciar(t("carrito.quitado", { nombre: nombre }));
         var siguiente = $(".cart-line-remove", carrito) || $("[data-cerrar]", carrito);
         siguiente.focus();
       });
@@ -529,6 +564,7 @@
 
     var alternativa = $("[data-carrito-alternativa]", carrito);
     if (!has(enlaces.whatsapp)) {
+      $("[data-carrito-whatsapp]", carrito).remove();
       alternativa.hidden = false;
       pintarAlternativa(alternativa);
     }
@@ -555,18 +591,18 @@
     if (has(enlaces.telefono)) {
       var tel = crear("a", "", cfg.contacto.telefono.replace(/^\+34\s*/, ""));
       tel.href = enlaces.telefono;
-      opciones.push([document.createTextNode("llamando al "), tel]);
+      opciones.push([document.createTextNode(t("carrito.altTelefono")), tel]);
     }
     if (has(enlaces.instagram)) {
       var ig = crear("a", "", "Instagram");
       ig.href = enlaces.instagram;
       ig.target = "_blank";
       ig.rel = "noopener noreferrer";
-      opciones.push([document.createTextNode("por "), ig]);
+      opciones.push([document.createTextNode(t("carrito.altInstagram")), ig]);
     }
-    p.replaceChildren(document.createTextNode("Pide en el local"));
+    p.replaceChildren(document.createTextNode(t("carrito.altInicio")));
     opciones.forEach(function (o, i) {
-      p.append(document.createTextNode(i === 0 ? ", " : " o "));
+      p.append(document.createTextNode(i === 0 ? ", " : t("carrito.altO")));
       p.append.apply(p, o);
     });
     p.append(document.createTextNode("."));
@@ -580,6 +616,17 @@
   pintarPestanas();
   iniciarFicha();
   iniciarCarrito();
+
+  // Al cambiar de idioma se rehace la carta conservando la pestaña elegida.
+  document.addEventListener("chimigo:idioma", function () {
+    if (ficha.open) ficha.close();
+    pestanas.replaceChildren();
+    lista.replaceChildren();
+    pintarCarta();
+    pintarPestanas();
+    if (!has(enlaces.whatsapp)) pintarAlternativa($("[data-carrito-alternativa]", carrito));
+    pintarCarrito();
+  });
 
   // Sincroniza el carrito si se cambia en otra pestaña.
   window.addEventListener("storage", function (e) {

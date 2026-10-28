@@ -13,23 +13,35 @@
 
 ## Qué tiene
 
-- **Cinco secciones** enlazadas desde el menú: Inicio, Nosotros, Menú, Ubicación y Contacto.
-- **Mapa** de Google Maps incrustado en la sección de ubicación.
-- **Formulario de contacto** (solo maquetación: no envía datos).
-- **Diseño adaptable**, con menú hamburguesa accesible y barra de acciones fija en móvil.
-- **Datos del local en un solo sitio** (`js/config.js`): la web pinta dirección, horario, metro, enlaces y datos estructurados desde ahí, y oculta cualquier botón cuyo dato esté vacío.
-- **SEO**: Open Graph, favicon SVG y JSON-LD de tipo `Restaurant`.
+- **Carta interactiva** generada desde `js/menu.js` (31 platos de su ficha de Glovo): filtros por categoría, ficha de cada plato con extras y carrito con pedido por WhatsApp.
+- **Horario en vivo** con la hora de Madrid ("Abierto ahora · cierra a las 23:30") y el día de hoy resaltado.
+- **Pedidos y reservas**: recoger en el local, Glovo, Uber Eats o Just Eat, según los enlaces que haya en `js/config.js`.
+- **Galería** "Chimi · Fútbol · Música" con visor accesible por teclado y que se desliza en el móvil.
+- **Opiniones** (enlace a Google Maps, sin reseñas inventadas), **preguntas frecuentes** y **eventos privados**.
+- **ES / EN**: la interfaz y las descripciones se traducen; los nombres de los platos se quedan en español.
+- **Instalable y sin conexión** (PWA): `manifest.json` y `sw.js`.
+- **SEO**: Open Graph, JSON-LD `Restaurant` con la carta completa (`Menu` y `MenuItem`), `sitemap.xml` y `robots.txt`.
 
 ## Estructura
 
 ```
 index.html
+manifest.json, sw.js, robots.txt, sitemap.xml
 css/styles.css
-js/config.js   ← datos del local (rellenar aquí)
-js/main.js
-img/favicon.svg
-img/hero.jpg   ← foto de portada opcional; si no existe se usa el degradado
+js/config.js         ← datos del local (rellenar aquí)
+js/menu.js           ← carta: platos, precios, extras, fotos y traducciones
+js/galeria-datos.js  ← fotos de la galería
+js/i18n.js           ← textos en inglés
+js/main.js           ← datos, horario, pedidos, FAQ, JSON-LD
+js/carta.js          ← menú, ficha y carrito
+js/galeria.js        ← galería y visor
+img/menu/            ← fotos de los platos (ver LEEME.md)
+img/local/           ← fotos del local y la terraza (ver LEEME.md)
 ```
+
+Un dato vacío en `js/config.js` (o `"PENDIENTE"`) oculta todo lo que depende de él.
+
+**Al publicar cambios**, sube `VERSION` en `sw.js` (por ejemplo, de `chimigo-v1` a `chimigo-v2`) para que los móviles que ya tienen la web guardada reciban los archivos nuevos.
 
 ## Stack
 
@@ -38,6 +50,7 @@ img/hero.jpg   ← foto de portada opcional; si no existe se usa el degradado
 | Estructura | HTML5 semántico (`header`, `main`, `section`, `footer`) |
 | Estilos | CSS con variables propias, flexbox y grid |
 | Lógica | JavaScript sin dependencias |
+| Sin conexión | Service worker y manifest (PWA) |
 | Tipografía | Google Fonts (Poppins y Fredoka) |
 
 ## Cómo verla

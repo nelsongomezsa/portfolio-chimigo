@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# PENDIENTE: cuando haya dominio, añadir la línea del sitemap con la URL completa:
+# Sitemap: https://DOMINIO/sitemap.xml

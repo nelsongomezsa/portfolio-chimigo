@@ -11,6 +11,7 @@
 
   <meta property="og:type" content="restaurant">
   <meta property="og:locale" content="es_ES">
+  <meta property="og:locale:alternate" content="en_GB">
   <meta property="og:site_name" content="ChimiGO Urban Food">
   <meta property="og:title" content="ChimiGO Urban Food | Chimi · Fútbol · Música en Cuatro Caminos">
   <meta property="og:description" content="El auténtico chimi dominicano en la Avenida Reina Victoria, 17 (Madrid). Chimis, torreznos acevichados, canastas de patacón y batidas.">
@@ -22,6 +23,8 @@
   <meta name="twitter:card" content="summary_large_image">
 
   <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="img/icon-180.png">
+  <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="css/styles.css">
   <link rel="preload" as="image" type="image/webp" href="img/hero-movil.webp" media="(max-width: 800px)" fetchpriority="high">
   <link rel="preload" as="image" type="image/webp" href="img/hero.webp" media="(min-width: 801px)" fetchpriority="high">
@@ -33,30 +36,42 @@
 
   <script src="js/config.js" defer></script>
   <script src="js/menu.js" defer></script>
+  <script src="js/galeria-datos.js" defer></script>
+  <script src="js/i18n.js" defer></script>
   <script src="js/main.js" defer></script>
   <script src="js/carta.js" defer></script>
+  <script src="js/galeria.js" defer></script>
 </head>
 <body>
 
-  <a href="#contenido" class="skip-link">Saltar al contenido</a>
+  <a href="#contenido" class="skip-link" data-i18n="skip">Saltar al contenido</a>
 
   <header class="site-header">
     <div class="container header-inner">
-      <a href="#inicio" class="logo" aria-label="ChimiGO Urban Food, ir al inicio">Chimi<span>GO</span></a>
+      <a href="#inicio" class="logo" aria-label="ChimiGO Urban Food, ir al inicio" data-i18n-attr="aria-label:logo.label">Chimi<span>GO</span></a>
 
-      <nav class="main-nav" id="menu-principal" aria-label="Principal">
+      <nav class="main-nav" id="menu-principal" aria-label="Principal" data-i18n-attr="aria-label:nav.label">
         <ul>
-          <li><a href="#inicio">Inicio</a></li>
-          <li><a href="#nosotros">Nosotros</a></li>
-          <li><a href="#menu">Menú</a></li>
-          <li data-requiere="eventos"><a href="#eventos">Eventos</a></li>
-          <li><a href="#ubicacion">Ubicación</a></li>
-          <li><a href="#contacto">Contacto</a></li>
+          <li><a href="#nosotros" data-i18n="nav.nosotros">Nosotros</a></li>
+          <li><a href="#menu" data-i18n="nav.menu">Menú</a></li>
+          <li><a href="#ambiente" data-i18n="nav.ambiente">Ambiente</a></li>
+          <li data-requiere="eventos"><a href="#eventos" data-i18n="nav.eventos">Eventos</a></li>
+          <li><a href="#ubicacion" data-i18n="nav.ubicacion">Ubicación</a></li>
+          <li><a href="#preguntas" data-i18n="nav.preguntas">Preguntas</a></li>
+          <li><a href="#contacto" data-i18n="nav.contacto">Contacto</a></li>
         </ul>
+        <div class="lang-switch lang-switch--nav" role="group" aria-label="Idioma · Language">
+          <button type="button" data-idioma="es" lang="es" aria-pressed="true">ES</button>
+          <button type="button" data-idioma="en" lang="en" aria-pressed="false">EN</button>
+        </div>
       </nav>
 
       <div class="header-actions">
-        <a href="#pedir" class="btn btn-primary btn-small" data-requiere="pedir" hidden>Pedir</a>
+        <div class="lang-switch lang-switch--header" role="group" aria-label="Idioma · Language">
+          <button type="button" data-idioma="es" lang="es" aria-pressed="true">ES</button>
+          <button type="button" data-idioma="en" lang="en" aria-pressed="false">EN</button>
+        </div>
+        <a href="#pedir" class="btn btn-primary btn-small" data-requiere="pedir" data-i18n="accion.pedir">Pedir</a>
         <button type="button" class="nav-toggle" aria-controls="menu-principal" aria-expanded="false" aria-label="Abrir menú">
           <span class="nav-toggle-bar" aria-hidden="true"></span>
         </button>
@@ -69,111 +84,109 @@
     <section id="inicio" class="hero hero--foto">
       <div class="container hero-content">
         <p class="hero-eyebrow" data-cfg-contenedor><span data-cfg="lema">Chimi · Fútbol · Música</span></p>
-        <h1>El auténtico chimi dominicano, en el corazón de Cuatro Caminos</h1>
-        <p class="hero-lead">Sabor de calle, receta de siempre. Descubre por qué somos el rinconcito dominicano favorito de Madrid.</p>
+        <h1 data-i18n="hero.titulo">El auténtico chimi dominicano, en el corazón de Cuatro Caminos</h1>
+        <p class="hero-lead" data-i18n="hero.lead">Sabor de calle, receta de siempre. Descubre por qué somos el rinconcito dominicano favorito de Madrid.</p>
 
         <div class="hero-actions">
-          <a href="#menu" class="btn btn-primary">Ver el menú</a>
-          <a href="#pedir" class="btn btn-light" data-requiere="pedir" hidden>Pedir</a>
-          <a href="https://www.google.com/maps/dir/?api=1&amp;destination=ChimiGO%20Urban%20Food%2C%20Avenida%20Reina%20Victoria%2C%2017%2C%2028003%20Madrid" class="btn btn-outline" data-href="llegar" data-requiere="llegar" target="_blank" rel="noopener noreferrer">Cómo llegar</a>
+          <a href="#menu" class="btn btn-primary" data-i18n="accion.verMenu">Ver el menú</a>
+          <a href="#pedir" class="btn btn-light" data-requiere="pedir" data-i18n="accion.pedir">Pedir</a>
+          <a href="https://www.google.com/maps/dir/?api=1&amp;destination=ChimiGO%20Urban%20Food%2C%20Avenida%20Reina%20Victoria%2C%2017%2C%2028003%20Madrid" class="btn btn-outline" data-href="llegar" data-requiere="llegar" target="_blank" rel="noopener noreferrer" data-i18n="accion.llegar">Cómo llegar</a>
         </div>
+
+        <p class="open-status open-status--hero" data-estado-horario aria-live="polite"></p>
 
         <ul class="hero-facts">
           <li><span data-horario-corto>Martes a domingo, 13:00 – 23:30</span></li>
           <li data-cfg-contenedor><span data-cfg="metro-corto">Metro Cuatro Caminos</span></li>
-          <li data-requiere="terraza">Con terraza</li>
+          <li data-requiere="terraza" data-i18n="hero.terraza">Con terraza</li>
         </ul>
       </div>
     </section>
 
     <section id="nosotros" class="about">
       <div class="container">
-        <h2>Sobre nosotros</h2>
-        <p>
-          El chimi nació en las calles de República Dominicana, inspirado en el choripán argentino, y con
-          el tiempo se convirtió en el bocadillo callejero más querido del país. En ChimiGO lo hacemos tal
-          como se vive allá: pan tostado, carne bien sazonada a la parrilla, ensalada de col fresca y
-          nuestras salsas de la casa.
-        </p>
-        <p>
-          Somos uno de los primeros locales especializados en chimi de Madrid y el punto de encuentro de
-          la comunidad dominicana en Cuatro Caminos. Terraza, ambiente familiar y mucho sabor: así es
-          ChimiGO.
-        </p>
+        <h2 data-i18n="nosotros.titulo">Sobre nosotros</h2>
+        <p data-i18n="nosotros.p1">El chimi nació en las calles de República Dominicana, inspirado en el choripán argentino, y con el tiempo se convirtió en el bocadillo callejero más querido del país. En ChimiGO lo hacemos tal como se vive allá: pan tostado, carne bien sazonada a la parrilla, ensalada de col fresca y nuestras salsas de la casa.</p>
+        <p data-i18n="nosotros.p2">Somos uno de los primeros locales especializados en chimi de Madrid y el punto de encuentro de la comunidad dominicana en Cuatro Caminos. Terraza, ambiente familiar y mucho sabor: así es ChimiGO.</p>
       </div>
     </section>
 
     <section id="menu" class="menu">
       <div class="container">
-        <h2>Nuestro menú</h2>
-        <div class="menu-tabs" role="tablist" aria-label="Categorías del menú" data-menu-tabs></div>
+        <h2 data-i18n="menu.titulo">Nuestro menú</h2>
+        <div class="menu-tabs" role="tablist" aria-label="Categorías del menú" data-i18n-attr="aria-label:menu.categorias" data-menu-tabs></div>
         <div class="menu-sections" id="menu-lista" role="tabpanel" data-menu-lista></div>
         <noscript>
           <p class="menu-noscript">Activa JavaScript para ver la carta o pásate por el local.</p>
         </noscript>
-        <p class="menu-note">Precios orientativos. Consulta la carta y los alérgenos en el local.</p>
+        <p class="menu-note" data-i18n="menu.nota">Precios orientativos. Consulta la carta y los alérgenos en el local.</p>
       </div>
     </section>
 
     <section id="pedir" class="order" data-requiere="pedidos" hidden>
       <div class="container">
-        <h2>Pide o reserva</h2>
-        <div class="order-groups">
-          <div class="order-group" data-requiere="pedir">
-            <h3>Pedir</h3>
-            <ul class="order-links" data-delivery>
-              <li data-requiere="whatsapp"><a class="btn btn-primary" data-href="whatsapp" target="_blank" rel="noopener noreferrer">Pedir por WhatsApp</a></li>
-              <li data-requiere="telefono"><a class="btn btn-primary" data-href="telefono">Pedir por teléfono</a></li>
-            </ul>
-          </div>
-          <div class="order-group" data-requiere="reservas">
-            <h3>Reservar mesa</h3>
-            <ul class="order-links">
-              <li><a class="btn btn-primary" data-href="reservas">Reservar</a></li>
-            </ul>
-          </div>
-        </div>
+        <h2 data-i18n="pedir.titulo">Pedidos y reservas</h2>
+        <p class="section-lead" data-i18n="pedir.lead">Pídelo para llevar, a domicilio o reserva mesa.</p>
+        <ul class="delivery-grid" data-pedidos></ul>
+      </div>
+    </section>
+
+    <section id="ambiente" class="ambience">
+      <div class="container">
+        <h2 data-cfg="lema">Chimi · Fútbol · Música</h2>
+        <p class="section-lead" data-i18n="ambiente.lead">Un vistazo a lo que te espera en la mesa.</p>
+        <ul class="gallery" data-galeria></ul>
       </div>
     </section>
 
     <section id="eventos" class="events" data-requiere="eventos">
       <div class="container events-inner">
         <div>
-          <h2>Eventos privados</h2>
-          <p>
-            ¿Un cumpleaños, una quedada en grupo o el partido con los tuyos? Celebra tu evento privado en
-            ChimiGO. Llámanos o escríbenos por Instagram y lo preparamos contigo.
-          </p>
+          <h2 data-i18n="eventos.titulo">Eventos privados</h2>
+          <p data-i18n="eventos.texto">¿Un cumpleaños, una quedada en grupo o el partido con los tuyos? Celebra tu evento privado en ChimiGO. Llámanos o escríbenos por Instagram y lo preparamos contigo.</p>
         </div>
         <ul class="events-actions">
-          <li data-requiere="telefono" hidden><a class="btn btn-primary" data-href="telefono">Llamar</a></li>
-          <li data-requiere="instagram"><a class="btn btn-outline" data-href="instagram" href="https://www.instagram.com/chimi.go/" target="_blank" rel="noopener noreferrer">Escríbenos en Instagram</a></li>
+          <li data-requiere="telefono" hidden><a class="btn btn-primary" data-href="telefono" data-i18n="accion.llamar">Llamar</a></li>
+          <li data-requiere="instagram"><a class="btn btn-outline" data-href="instagram" href="https://www.instagram.com/chimi.go/" target="_blank" rel="noopener noreferrer" data-i18n="accion.instagram">Escríbenos en Instagram</a></li>
         </ul>
+      </div>
+    </section>
+
+    <section id="opiniones" class="reviews">
+      <div class="container reviews-inner">
+        <div>
+          <h2 data-i18n="opiniones.titulo">Opiniones</h2>
+          <p class="reviews-rating" data-valoracion hidden></p>
+          <p data-i18n="opiniones.texto">¿Ya nos conoces? Lee lo que dicen nuestros clientes en Google o deja tu propia opinión.</p>
+        </div>
+        <a class="btn btn-primary" data-href="opiniones" target="_blank" rel="noopener noreferrer" data-i18n="opiniones.boton">Ver opiniones en Google</a>
       </div>
     </section>
 
     <section id="ubicacion" class="location">
       <div class="container location-inner">
         <div class="location-info">
-          <h2>Dónde estamos</h2>
-          <p data-cfg-contenedor><strong>Dirección:</strong> <span data-cfg="direccion">Avenida Reina Victoria, 17 · Cuatro Caminos · Madrid</span></p>
-          <p data-cfg-contenedor><strong>Metro:</strong> <span data-cfg="metro">Cuatro Caminos (L1, L2, L6)</span></p>
+          <h2 data-i18n="ubicacion.titulo">Dónde estamos</h2>
+          <p data-cfg-contenedor><strong data-i18n="ubicacion.direccion">Dirección:</strong> <span data-cfg="direccion">Avenida Reina Victoria, 17 · Cuatro Caminos · Madrid</span></p>
+          <p data-cfg-contenedor><strong data-i18n="ubicacion.metro">Metro:</strong> <span data-cfg="metro">Cuatro Caminos (L1, L2, L6)</span></p>
           <div class="schedule">
-            <strong>Horario</strong>
-            <dl data-horario-lista>
-              <dt>Martes a domingo</dt>
-              <dd>13:00 – 23:30</dd>
-            </dl>
+            <h3 class="schedule-title" data-i18n="ubicacion.horario">Horario</h3>
+            <p class="open-status" data-estado-horario></p>
+            <table class="schedule-table" data-horario-tabla>
+              <caption class="visually-hidden" data-i18n="ubicacion.horarioCaption">Horario de apertura por días</caption>
+              <tbody></tbody>
+            </table>
           </div>
-          <p data-requiere="terraza">Contamos con terraza para disfrutar del chimi al aire libre.</p>
+          <p data-requiere="terraza" data-i18n="ubicacion.terraza">Contamos con terraza para disfrutar del chimi al aire libre.</p>
           <p class="location-actions">
-            <a href="https://www.google.com/maps/dir/?api=1&amp;destination=ChimiGO%20Urban%20Food%2C%20Avenida%20Reina%20Victoria%2C%2017%2C%2028003%20Madrid" class="btn btn-primary" data-href="llegar" data-requiere="llegar" target="_blank" rel="noopener noreferrer">Cómo llegar</a>
-            <a class="btn btn-secondary" data-href="telefono" data-requiere="telefono" hidden>Llamar</a>
+            <a href="https://www.google.com/maps/dir/?api=1&amp;destination=ChimiGO%20Urban%20Food%2C%20Avenida%20Reina%20Victoria%2C%2017%2C%2028003%20Madrid" class="btn btn-primary" data-href="llegar" data-requiere="llegar" target="_blank" rel="noopener noreferrer" data-i18n="accion.llegar">Cómo llegar</a>
+            <a class="btn btn-secondary" data-href="telefono" data-requiere="telefono" data-i18n="accion.llamar" hidden>Llamar</a>
           </p>
         </div>
         <div class="location-map">
           <iframe
             title="Mapa de ubicación de ChimiGO Urban Food en Cuatro Caminos, Madrid"
+            data-i18n-attr="title:ubicacion.mapa"
             src="https://www.google.com/maps?q=Avenida+Reina+Victoria+17+Madrid&amp;output=embed"
             data-mapa
             width="600"
@@ -185,27 +198,34 @@
       </div>
     </section>
 
+    <section id="preguntas" class="faq">
+      <div class="container">
+        <h2 data-i18n="faq.titulo">Preguntas frecuentes</h2>
+        <div class="faq-list" data-faq></div>
+      </div>
+    </section>
+
     <section id="contacto" class="contact">
       <div class="container">
-        <h2>Contacto</h2>
-        <p>¿Dudas, pedidos grandes o eventos? Escríbenos.</p>
-        <ul class="contact-links">
-          <li data-requiere="instagram"><a data-href="instagram" href="https://www.instagram.com/chimi.go/" target="_blank" rel="noopener noreferrer">Instagram: @chimi.go</a></li>
-          <li data-requiere="whatsapp" hidden><a data-href="whatsapp" target="_blank" rel="noopener noreferrer">WhatsApp</a></li>
-          <li data-cfg-contenedor hidden><a data-href="telefono"><span data-cfg="telefono"></span></a></li>
-          <li data-cfg-contenedor hidden><a data-href="email"><span data-cfg="email"></span></a></li>
+        <h2 data-i18n="contacto.titulo">Contacto</h2>
+        <p data-i18n="contacto.lead">¿Dudas, pedidos grandes o eventos? Contacta con nosotros.</p>
+        <ul class="contact-actions">
+          <li data-requiere="telefono" hidden><a class="btn btn-primary" data-href="telefono" data-i18n="accion.llamar">Llamar</a></li>
+          <li data-requiere="whatsapp" hidden><a class="btn btn-whatsapp" data-href="whatsapp" target="_blank" rel="noopener noreferrer">WhatsApp</a></li>
+          <li data-requiere="instagram"><a class="btn btn-secondary" data-href="instagram" href="https://www.instagram.com/chimi.go/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
         </ul>
-        <form class="contact-form">
-          <label for="nombre">Nombre</label>
-          <input type="text" id="nombre" name="nombre" autocomplete="name" placeholder="Tu nombre" required>
+        <form class="contact-form" data-requiere="email" data-contacto hidden>
+          <label for="nombre" data-i18n="contacto.nombre">Nombre</label>
+          <input type="text" id="nombre" name="nombre" autocomplete="name" required>
 
-          <label for="email">Email</label>
-          <input type="email" id="email" name="email" autocomplete="email" placeholder="tucorreo@ejemplo.com" required>
+          <label for="email" data-i18n="contacto.email">Email</label>
+          <input type="email" id="email" name="email" autocomplete="email" required>
 
-          <label for="mensaje">Mensaje</label>
-          <textarea id="mensaje" name="mensaje" rows="5" placeholder="Escribe tu mensaje..." required></textarea>
+          <label for="mensaje" data-i18n="contacto.mensaje">Mensaje</label>
+          <textarea id="mensaje" name="mensaje" rows="5" required></textarea>
 
-          <button type="submit" class="btn btn-primary">Enviar mensaje</button>
+          <p class="contact-hint" data-i18n="contacto.aviso">Se abrirá tu programa de correo con el mensaje preparado.</p>
+          <button type="submit" class="btn btn-primary" data-i18n="contacto.enviar">Preparar correo</button>
         </form>
       </div>
     </section>
@@ -214,7 +234,7 @@
 
   <footer class="site-footer">
     <div class="container footer-inner">
-      <p>&copy; <span data-anio>2026</span> <span data-cfg="nombre">ChimiGO Urban Food</span>. Todos los derechos reservados.</p>
+      <p>&copy; <span data-anio>2026</span> <span data-cfg="nombre">ChimiGO Urban Food</span>. <span data-i18n="pie.derechos">Todos los derechos reservados.</span></p>
       <ul class="social-links">
         <li data-requiere="instagram"><a data-href="instagram" href="https://www.instagram.com/chimi.go/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
         <li data-requiere="tiktok" hidden><a data-href="tiktok" target="_blank" rel="noopener noreferrer">TikTok</a></li>
@@ -223,7 +243,7 @@
   </footer>
 
   <dialog class="dish-dialog" id="ficha" aria-labelledby="ficha-titulo">
-    <button type="button" class="dialog-close" data-cerrar aria-label="Cerrar la ficha">
+    <button type="button" class="dialog-close" data-cerrar aria-label="Cerrar la ficha" data-i18n-attr="aria-label:ficha.cerrar">
       <span aria-hidden="true">&times;</span>
     </button>
     <div data-ficha-media></div>
@@ -233,18 +253,36 @@
       <p class="dish-desc" data-ficha-desc></p>
       <p class="dish-allergens" data-ficha-alergenos></p>
       <fieldset class="dish-extras" data-ficha-extras hidden>
-        <legend>Añade extras <span>(opcional)</span></legend>
+        <legend><span data-i18n="ficha.extras">Añade extras</span> <span class="dish-extras-opt" data-i18n="comun.opcional">(opcional)</span></legend>
         <div class="dish-extras-list" data-ficha-extras-lista></div>
       </fieldset>
       <div class="dish-actions">
         <p class="dish-price" data-ficha-precio></p>
-        <div class="qty" role="group" aria-label="Cantidad">
-          <button type="button" class="qty-btn" data-ficha-menos aria-label="Una unidad menos">&minus;</button>
+        <div class="qty" role="group" aria-label="Cantidad" data-i18n-attr="aria-label:ficha.cantidad">
+          <button type="button" class="qty-btn" data-ficha-menos aria-label="Una unidad menos" data-i18n-attr="aria-label:ficha.menos">&minus;</button>
           <span class="qty-value" data-ficha-cantidad aria-live="polite">1</span>
-          <button type="button" class="qty-btn" data-ficha-mas aria-label="Una unidad más">+</button>
+          <button type="button" class="qty-btn" data-ficha-mas aria-label="Una unidad más" data-i18n-attr="aria-label:ficha.mas">+</button>
         </div>
       </div>
       <button type="button" class="btn btn-primary btn-block" data-ficha-anadir>Añadir</button>
+    </div>
+  </dialog>
+
+  <dialog class="lightbox" id="lightbox" aria-labelledby="lightbox-pie">
+    <div class="lightbox-inner">
+      <button type="button" class="dialog-close lightbox-close" data-cerrar aria-label="Cerrar la galería" data-i18n-attr="aria-label:galeria.cerrar">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <figure class="lightbox-figure">
+        <div class="lightbox-media" data-lightbox-media></div>
+        <figcaption id="lightbox-pie"><span data-lightbox-pie></span> <span class="lightbox-count" data-lightbox-cuenta></span></figcaption>
+      </figure>
+      <button type="button" class="lightbox-nav lightbox-prev" data-lightbox-anterior aria-label="Foto anterior" data-i18n-attr="aria-label:galeria.anterior">
+        <svg aria-hidden="true" viewBox="0 0 24 24" width="28" height="28"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button type="button" class="lightbox-nav lightbox-next" data-lightbox-siguiente aria-label="Foto siguiente" data-i18n-attr="aria-label:galeria.siguiente">
+        <svg aria-hidden="true" viewBox="0 0 24 24" width="28" height="28"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
     </div>
   </dialog>
 
@@ -258,58 +296,58 @@
     <div class="cart-inner">
       <div class="cart-head">
         <div>
-          <h2 id="carrito-titulo">Tu pedido</h2>
+          <h2 id="carrito-titulo" data-i18n="carrito.titulo">Tu pedido</h2>
           <p class="cart-count" data-carrito-cuenta></p>
         </div>
-        <button type="button" class="dialog-close" data-cerrar aria-label="Cerrar el pedido">
+        <button type="button" class="dialog-close" data-cerrar aria-label="Cerrar el pedido" data-i18n-attr="aria-label:carrito.cerrar">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
 
       <div class="cart-body">
         <div class="cart-empty" data-carrito-vacio>
-          <p>Todavía no has añadido nada.</p>
-          <button type="button" class="btn btn-primary" data-carrito-ver-menu>Ver el menú</button>
+          <p data-i18n="carrito.vacio">Todavía no has añadido nada.</p>
+          <button type="button" class="btn btn-primary" data-carrito-ver-menu data-i18n="accion.verMenu">Ver el menú</button>
         </div>
         <ul class="cart-lines" data-carrito-lineas></ul>
 
         <div class="cart-options" data-carrito-opciones>
           <fieldset class="cart-mode">
-            <legend>¿Cómo lo quieres?</legend>
-            <label><input type="radio" name="modo" value="recoger" checked> Para recoger</label>
-            <label><input type="radio" name="modo" value="local"> Para tomar en el local</label>
+            <legend data-i18n="carrito.modo">¿Cómo lo quieres?</legend>
+            <label><input type="radio" name="modo" value="recoger" checked> <span data-i18n="carrito.recoger">Para recoger</span></label>
+            <label><input type="radio" name="modo" value="local"> <span data-i18n="carrito.local">Para tomar en el local</span></label>
           </fieldset>
-          <label class="cart-note-label" for="carrito-nota">Nota para el local <span>(opcional)</span></label>
-          <textarea id="carrito-nota" rows="2" maxlength="300" placeholder="Sin cebolla, salsa aparte…"></textarea>
+          <label class="cart-note-label" for="carrito-nota"><span data-i18n="carrito.nota">Nota para el local</span> <span class="cart-note-opt" data-i18n="comun.opcional">(opcional)</span></label>
+          <textarea id="carrito-nota" rows="2" maxlength="300" placeholder="Sin cebolla, salsa aparte…" data-i18n-attr="placeholder:carrito.notaEjemplo"></textarea>
         </div>
       </div>
 
       <div class="cart-foot" data-carrito-pie>
-        <p class="cart-total"><span>Total</span> <strong data-carrito-total>0,00 €</strong></p>
-        <p class="cart-notice">El total es orientativo: el local te confirmará el precio final.</p>
+        <p class="cart-total"><span data-i18n="carrito.total">Total</span> <strong data-carrito-total>0,00 €</strong></p>
+        <p class="cart-notice" data-i18n="carrito.aviso">El total es orientativo: el local te confirmará el precio final.</p>
         <a class="btn btn-whatsapp btn-block" data-carrito-whatsapp target="_blank" rel="noopener noreferrer" hidden>
           <svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20"><path d="M4 20l1.3-4A8 8 0 1 1 8 18.7L4 20Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
-          Pedir por WhatsApp
+          <span data-i18n="carrito.whatsapp">Pedir por WhatsApp</span>
         </a>
-        <p class="cart-alt" data-carrito-alternativa hidden>Pide en el local o por <a href="https://www.instagram.com/chimi.go/" data-href="instagram" target="_blank" rel="noopener noreferrer">Instagram</a>.</p>
+        <p class="cart-alt" data-carrito-alternativa hidden></p>
       </div>
     </div>
   </dialog>
 
   <p class="visually-hidden" role="status" data-aviso></p>
 
-  <nav class="mobile-bar" aria-label="Acciones rápidas">
+  <nav class="mobile-bar" aria-label="Acciones rápidas" data-i18n-attr="aria-label:barra.label">
     <a href="#pedir" class="mobile-bar-item" data-requiere="pedir" hidden>
       <svg aria-hidden="true" viewBox="0 0 24 24" width="22" height="22"><path d="M6 7h12l-1 13H7L6 7Z M9 7a3 3 0 0 1 6 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
-      Pedir
+      <span data-i18n="accion.pedir">Pedir</span>
     </a>
     <a class="mobile-bar-item" data-href="telefono" data-requiere="telefono" hidden>
       <svg aria-hidden="true" viewBox="0 0 24 24" width="22" height="22"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a1 1 0 0 1-1 1A16 16 0 0 1 4 5a1 1 0 0 1 1-1Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
-      Llamar
+      <span data-i18n="accion.llamar">Llamar</span>
     </a>
     <a href="https://www.google.com/maps/dir/?api=1&amp;destination=ChimiGO%20Urban%20Food%2C%20Avenida%20Reina%20Victoria%2C%2017%2C%2028003%20Madrid" class="mobile-bar-item" data-href="llegar" data-requiere="llegar" target="_blank" rel="noopener noreferrer">
       <svg aria-hidden="true" viewBox="0 0 24 24" width="22" height="22"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21Z" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="9.5" r="2.5" fill="none" stroke="currentColor" stroke-width="2"/></svg>
-      Cómo llegar
+      <span data-i18n="accion.llegar">Cómo llegar</span>
     </a>
   </nav>
 

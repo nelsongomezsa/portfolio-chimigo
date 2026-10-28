@@ -64,4 +64,8 @@ window.CHIMIGO = {
   reservasPorTelefono: true,
 
   eventosPrivados: true,
+
+  // Valoración media REAL en Google Maps, copiada a mano de la ficha del local (p. ej. media: 4.6, numeroOpiniones: 230).
+  // Vacía = no se muestra; el botón "Ver opiniones en Google" aparece siempre.
+  valoracion: { media: null, numeroOpiniones: null },
 };
