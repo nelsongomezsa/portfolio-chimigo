@@ -1,23 +1,41 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="no-js">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chimi Go | Auténtica Comida Callejera Dominicana en Cuatro Caminos</title>
-  <meta name="description" content="Chimi Go, comida dominicana en Cuatro Caminos, Madrid. Chimis, quipes, torreznos y batidos naturales en Avenida Reina Victoria.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <script>document.documentElement.classList.replace('no-js', 'js');</script>
+  <title>Chimi Go | Comida callejera dominicana en Cuatro Caminos, Madrid</title>
+  <meta name="description" content="Chimi Go, comida callejera dominicana en Cuatro Caminos, Madrid. Chimis, quipes, chicharrón con yuca y batidos naturales en la Avenida Reina Victoria, 17. Con terraza.">
   <meta name="author" content="Chimi Go">
-  <meta name="keywords" content="chimi, comida dominicana, cuatro caminos, madrid, street food, chimi go">
+  <meta name="theme-color" content="#d9480f">
+
+  <meta property="og:type" content="restaurant">
+  <meta property="og:locale" content="es_ES">
+  <meta property="og:site_name" content="Chimi Go">
+  <meta property="og:title" content="Chimi Go | Comida callejera dominicana en Cuatro Caminos">
+  <meta property="og:description" content="El auténtico chimi dominicano en la Avenida Reina Victoria, 17 (Madrid). Chimis, quipes, chicharrón con yuca y batidos naturales.">
+  <meta name="twitter:card" content="summary">
+
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/styles.css">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Fredoka:wght@500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Fredoka:wght@500;600&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Fredoka:wght@500;600&display=swap"></noscript>
+
+  <script src="js/config.js" defer></script>
+  <script src="js/main.js" defer></script>
 </head>
 <body>
 
- 
+  <a href="#contenido" class="skip-link">Saltar al contenido</a>
+
   <header class="site-header">
     <div class="container header-inner">
-      <a href="#inicio" class="logo">Chimi<span>Go</span></a>
-      <nav class="main-nav">
+      <a href="#inicio" class="logo" aria-label="Chimi Go, ir al inicio">Chimi<span>Go</span></a>
+
+      <nav class="main-nav" id="menu-principal" aria-label="Principal">
         <ul>
           <li><a href="#inicio">Inicio</a></li>
           <li><a href="#nosotros">Nosotros</a></li>
@@ -26,29 +44,46 @@
           <li><a href="#contacto">Contacto</a></li>
         </ul>
       </nav>
+
+      <div class="header-actions">
+        <a href="#pedir" class="btn btn-primary btn-small" data-requiere="pedir" hidden>Pedir</a>
+        <button type="button" class="nav-toggle" aria-controls="menu-principal" aria-expanded="false" aria-label="Abrir menú">
+          <span class="nav-toggle-bar" aria-hidden="true"></span>
+        </button>
+      </div>
     </div>
   </header>
 
-  <main>
-
+  <main id="contenido" tabindex="-1">
 
     <section id="inicio" class="hero">
       <div class="container hero-content">
+        <p class="hero-eyebrow">Comida callejera dominicana<span class="hero-eyebrow-extra"> · Cuatro Caminos</span></p>
         <h1>El auténtico chimi dominicano, en el corazón de Cuatro Caminos</h1>
-        <p>Sabor de calle, receta de siempre. Descubre por qué somos el rinconcito dominicano favorito de Madrid.</p>
-        <a href="#menu" class="btn-primary">Ver el menú</a>
+        <p class="hero-lead">Sabor de calle, receta de siempre. Descubre por qué somos el rinconcito dominicano favorito de Madrid.</p>
+
+        <div class="hero-actions">
+          <a href="#menu" class="btn btn-primary">Ver el menú</a>
+          <a href="#pedir" class="btn btn-light" data-requiere="pedir" hidden>Pedir</a>
+          <a href="https://www.google.com/maps/dir/?api=1&amp;destination=Chimi%20Go%2C%20Avenida%20Reina%20Victoria%2C%2017%2C%20Madrid" class="btn btn-outline" data-href="llegar" data-requiere="llegar" target="_blank" rel="noopener noreferrer">Cómo llegar</a>
+        </div>
+
+        <ul class="hero-facts">
+          <li><span data-horario-corto>Martes a domingo, 13:00 – 23:30</span></li>
+          <li data-cfg-contenedor><span data-cfg="metro-corto">Metro Cuatro Caminos</span></li>
+          <li data-requiere="terraza">Con terraza</li>
+        </ul>
       </div>
     </section>
 
-  
     <section id="nosotros" class="about">
       <div class="container">
         <h2>Sobre nosotros</h2>
         <p>
-          El chimi nació en las calles de República Dominicana, inspirado en el choripán argentino y
-          convertido con el tiempo en el bocadillo callejero más querido del país. En Chimi Go trajimos
-          esa receta tal cual se vive allá: pan tostado, carne bien sazonada a la parrilla, ensalada de
-          col fresca y nuestras salsas de la casa.
+          El chimi nació en las calles de República Dominicana, inspirado en el choripán argentino, y con
+          el tiempo se convirtió en el bocadillo callejero más querido del país. En Chimi Go lo hacemos tal
+          como se vive allá: pan tostado, carne bien sazonada a la parrilla, ensalada de col fresca y
+          nuestras salsas de la casa.
         </p>
         <p>
           Somos uno de los primeros locales especializados en chimi de Madrid y el punto de encuentro de
@@ -64,42 +99,42 @@
         <div class="menu-grid">
 
           <article class="menu-card">
-            <img src="https://picsum.photos/seed/chimipierna/400/300" alt="Chimi de pierna de cerdo con col, tomate y salsas en pan tostado">
+            <img src="https://picsum.photos/seed/chimipierna/400/300" width="400" height="300" loading="lazy" decoding="async" alt="Chimi de pierna de cerdo con col, tomate y salsas en pan tostado">
             <h3>Chimi de Pierna</h3>
             <p>Pierna de cerdo sazonada a la parrilla, col, tomate y salsa de la casa en pan tostado.</p>
             <span class="price">6,50 €</span>
           </article>
 
           <article class="menu-card">
-            <img src="https://picsum.photos/seed/chimiternera/400/300" alt="Chimi clásico de ternera con ensalada">
+            <img src="https://picsum.photos/seed/chimiternera/400/300" width="400" height="300" loading="lazy" decoding="async" alt="Chimi clásico de ternera con ensalada">
             <h3>Chimi de Ternera</h3>
             <p>La versión clásica: ternera picada, especias dominicanas y salsa suave.</p>
             <span class="price">6,00 €</span>
           </article>
 
           <article class="menu-card">
-            <img src="https://picsum.photos/seed/quipes/400/300" alt="Quipes dominicanos, bocaditos rellenos de carne">
+            <img src="https://picsum.photos/seed/quipes/400/300" width="400" height="300" loading="lazy" decoding="async" alt="Quipes dominicanos, bocaditos de trigo rellenos de carne">
             <h3>Quipes</h3>
             <p>Bocaditos crujientes de trigo rellenos de carne especiada, fritos al momento.</p>
             <span class="price">4,50 €</span>
           </article>
 
           <article class="menu-card">
-            <img src="https://picsum.photos/seed/torreznos/400/300" alt="Torreznos acevichados con chicharrón y yuca">
+            <img src="https://picsum.photos/seed/torreznos/400/300" width="400" height="300" loading="lazy" decoding="async" alt="Chicharrón crujiente con yuca hervida y cebolla">
             <h3>Chicharrón con Yuca</h3>
             <p>Chicharrón crujiente acompañado de yuca hervida y un toque ácido de cebolla.</p>
             <span class="price">7,00 €</span>
           </article>
 
           <article class="menu-card">
-            <img src="https://picsum.photos/seed/batidomoririsonando/400/300" alt="Batido dominicano Morir Soñando">
+            <img src="https://picsum.photos/seed/batidomoririsonando/400/300" width="400" height="300" loading="lazy" decoding="async" alt="Batido dominicano Morir Soñando, de naranja y leche">
             <h3>Batido Morir Soñando</h3>
             <p>Naranja y leche condensada bien fría. El postre líquido más querido de RD.</p>
             <span class="price">3,50 €</span>
           </article>
 
           <article class="menu-card">
-            <img src="https://picsum.photos/seed/batidoguanabana/400/300" alt="Batido natural de guanábana">
+            <img src="https://picsum.photos/seed/batidoguanabana/400/300" width="400" height="300" loading="lazy" decoding="async" alt="Batido natural de guanábana">
             <h3>Batido de Guanábana</h3>
             <p>Fruta tropical natural, cremoso y refrescante, sin azúcares añadidos.</p>
             <span class="price">3,50 €</span>
@@ -109,20 +144,53 @@
       </div>
     </section>
 
-  
+    <section id="pedir" class="order" data-requiere="pedidos" hidden>
+      <div class="container">
+        <h2>Pide o reserva</h2>
+        <div class="order-groups">
+          <div class="order-group" data-requiere="pedir">
+            <h3>Pedir</h3>
+            <ul class="order-links" data-delivery>
+              <li data-requiere="whatsapp"><a class="btn btn-primary" data-href="whatsapp" target="_blank" rel="noopener noreferrer">Pedir por WhatsApp</a></li>
+              <li data-requiere="telefono"><a class="btn btn-primary" data-href="telefono">Pedir por teléfono</a></li>
+            </ul>
+          </div>
+          <div class="order-group" data-requiere="reservas">
+            <h3>Reservar mesa</h3>
+            <ul class="order-links">
+              <li><a class="btn btn-primary" data-href="reservas" target="_blank" rel="noopener noreferrer">Reservar</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section id="ubicacion" class="location">
       <div class="container location-inner">
         <div class="location-info">
           <h2>Dónde estamos</h2>
-          <p><strong>Dirección:</strong> Avenida Reina Victoria, 17 — Cuatro Caminos, Madrid</p>
-          <p><strong>Horario:</strong> Martes a domingo, 13:00 – 23:30h</p>
-          <p><strong>Metro:</strong> Cuatro Caminos (L1, L2, L6)</p>
-          <p>Contamos con terraza para disfrutar del chimi al aire libre.</p>
+          <p data-cfg-contenedor><strong>Dirección:</strong> <span data-cfg="direccion">Avenida Reina Victoria, 17 · Cuatro Caminos · Madrid</span></p>
+          <p data-cfg-contenedor><strong>Metro:</strong> <span data-cfg="metro">Cuatro Caminos (L1, L2, L6)</span></p>
+          <div class="schedule">
+            <strong>Horario</strong>
+            <dl data-horario-lista>
+              <dt>Martes a domingo</dt>
+              <dd>13:00 – 23:30</dd>
+            </dl>
+          </div>
+          <p data-requiere="terraza">Contamos con terraza para disfrutar del chimi al aire libre.</p>
+          <p class="location-actions">
+            <a href="https://www.google.com/maps/dir/?api=1&amp;destination=Chimi%20Go%2C%20Avenida%20Reina%20Victoria%2C%2017%2C%20Madrid" class="btn btn-primary" data-href="llegar" data-requiere="llegar" target="_blank" rel="noopener noreferrer">Cómo llegar</a>
+            <a class="btn btn-secondary" data-href="telefono" data-requiere="telefono" hidden>Llamar</a>
+          </p>
         </div>
         <div class="location-map">
           <iframe
             title="Mapa de ubicación de Chimi Go en Cuatro Caminos, Madrid"
-            src="https://www.google.com/maps?q=Avenida+Reina+Victoria+17+Madrid&output=embed"
+            src="https://www.google.com/maps?q=Avenida+Reina+Victoria+17+Madrid&amp;output=embed"
+            data-mapa
+            width="600"
+            height="400"
             loading="lazy"
             referrerpolicy="no-referrer-when-downgrade">
           </iframe>
@@ -130,39 +198,56 @@
       </div>
     </section>
 
-  
     <section id="contacto" class="contact">
       <div class="container">
         <h2>Contacto</h2>
         <p>¿Dudas, pedidos grandes o eventos? Escríbenos.</p>
+        <ul class="contact-links">
+          <li data-requiere="instagram"><a data-href="instagram" href="https://www.instagram.com/chimi.go/" target="_blank" rel="noopener noreferrer">Instagram: @chimi.go</a></li>
+          <li data-requiere="whatsapp" hidden><a data-href="whatsapp" target="_blank" rel="noopener noreferrer">WhatsApp</a></li>
+          <li data-cfg-contenedor hidden><a data-href="telefono"><span data-cfg="telefono"></span></a></li>
+          <li data-cfg-contenedor hidden><a data-href="email"><span data-cfg="email"></span></a></li>
+        </ul>
         <form class="contact-form">
           <label for="nombre">Nombre</label>
-          <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" required>
+          <input type="text" id="nombre" name="nombre" autocomplete="name" placeholder="Tu nombre" required>
 
           <label for="email">Email</label>
-          <input type="email" id="email" name="email" placeholder="tucorreo@ejemplo.com" required>
+          <input type="email" id="email" name="email" autocomplete="email" placeholder="tucorreo@ejemplo.com" required>
 
           <label for="mensaje">Mensaje</label>
           <textarea id="mensaje" name="mensaje" rows="5" placeholder="Escribe tu mensaje..." required></textarea>
 
-          <button type="submit" class="btn-primary">Enviar mensaje</button>
+          <button type="submit" class="btn btn-primary">Enviar mensaje</button>
         </form>
       </div>
     </section>
 
   </main>
 
-
   <footer class="site-footer">
     <div class="container footer-inner">
-      <p>&copy; 2026 Chimi Go. Todos los derechos reservados.</p>
+      <p>&copy; <span data-anio>2026</span> <span data-cfg="nombre">Chimi Go</span>. Todos los derechos reservados.</p>
       <ul class="social-links">
-        <li><a href="https://instagram.com" target="_blank" rel="noopener noreferrer">Instagram</a></li>
-        <li><a href="https://tiktok.com" target="_blank" rel="noopener noreferrer">TikTok</a></li>
-        <li><a href="https://facebook.com" target="_blank" rel="noopener noreferrer">Facebook</a></li>
+        <li data-requiere="instagram"><a data-href="instagram" href="https://www.instagram.com/chimi.go/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
       </ul>
     </div>
   </footer>
+
+  <nav class="mobile-bar" aria-label="Acciones rápidas">
+    <a href="#pedir" class="mobile-bar-item" data-requiere="pedir" hidden>
+      <svg aria-hidden="true" viewBox="0 0 24 24" width="22" height="22"><path d="M6 7h12l-1 13H7L6 7Z M9 7a3 3 0 0 1 6 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+      Pedir
+    </a>
+    <a class="mobile-bar-item" data-href="telefono" data-requiere="telefono" hidden>
+      <svg aria-hidden="true" viewBox="0 0 24 24" width="22" height="22"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a1 1 0 0 1-1 1A16 16 0 0 1 4 5a1 1 0 0 1 1-1Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+      Llamar
+    </a>
+    <a href="https://www.google.com/maps/dir/?api=1&amp;destination=Chimi%20Go%2C%20Avenida%20Reina%20Victoria%2C%2017%2C%20Madrid" class="mobile-bar-item" data-href="llegar" data-requiere="llegar" target="_blank" rel="noopener noreferrer">
+      <svg aria-hidden="true" viewBox="0 0 24 24" width="22" height="22"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21Z" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="9.5" r="2.5" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+      Cómo llegar
+    </a>
+  </nav>
 
 </body>
 </html>

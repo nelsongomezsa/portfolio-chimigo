@@ -16,7 +16,20 @@
 - **Cinco secciones** enlazadas desde el menú: Inicio, Nosotros, Menú, Ubicación y Contacto.
 - **Mapa** de Google Maps incrustado en la sección de ubicación.
 - **Formulario de contacto** (solo maquetación: no envía datos).
-- **Diseño adaptable** con tres puntos de corte (`@media`).
+- **Diseño adaptable**, con menú hamburguesa accesible y barra de acciones fija en móvil.
+- **Datos del local en un solo sitio** (`js/config.js`): la web pinta dirección, horario, metro, enlaces y datos estructurados desde ahí, y oculta cualquier botón cuyo dato esté vacío.
+- **SEO**: Open Graph, favicon SVG y JSON-LD de tipo `Restaurant`.
+
+## Estructura
+
+```
+index.html
+css/styles.css
+js/config.js   ← datos del local (rellenar aquí)
+js/main.js
+img/favicon.svg
+img/hero.jpg   ← foto de portada opcional; si no existe se usa el degradado
+```
 
 ## Stack
 
@@ -24,6 +37,7 @@
 |---|---|
 | Estructura | HTML5 semántico (`header`, `main`, `section`, `footer`) |
 | Estilos | CSS con variables propias, flexbox y grid |
+| Lógica | JavaScript sin dependencias |
 | Tipografía | Google Fonts (Poppins y Fredoka) |
 
 ## Cómo verla
@@ -32,7 +46,7 @@
    ```bash
    git clone https://github.com/nelsongomezsa/portfolio-chimigo.git
    ```
-2. Abre `index.html` en el navegador.
+2. Sírvela en local, por ejemplo con `python3 -m http.server`, y abre `http://localhost:8000`.
 
 ## Autor
 
