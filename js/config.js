@@ -7,7 +7,7 @@ window.CHIMIGO = {
   nombre: "ChimiGO Urban Food",
   lema: "Chimi · Fútbol · Música",
   descripcion:
-    "Comida callejera dominicana en Cuatro Caminos, Madrid: chimis, quipes, chicharrón con yuca y batidos naturales.",
+    "Comida callejera dominicana en Cuatro Caminos, Madrid: chimis, torreznos acevichados, canastas de patacón y batidas.",
   tipoCocina: "Dominicana",
 
   // URL pública de la web, con https:// y barra final. Se usa en SEO y datos estructurados.
@@ -54,7 +54,7 @@ window.CHIMIGO = {
   // Enlaces directos a la ficha del local en cada plataforma.
   pedidos: {
     uberEats: "",
-    glovo: "",
+    glovo: "https://glovoapp.com/es/es/madrid/stores/chimigo-madrid",
     justEat: "",
   },
 

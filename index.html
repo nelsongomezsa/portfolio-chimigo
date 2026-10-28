@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <script>document.documentElement.classList.replace('no-js', 'js');</script>
   <title>ChimiGO Urban Food | Comida callejera dominicana en Cuatro Caminos, Madrid</title>
-  <meta name="description" content="ChimiGO Urban Food: chimi, fútbol y música en Cuatro Caminos, Madrid. Chimis, quipes, chicharrón con yuca y batidos naturales en la Avenida Reina Victoria, 17. Con terraza.">
+  <meta name="description" content="ChimiGO Urban Food: chimi, fútbol y música en Cuatro Caminos, Madrid. Chimis Balón de Oro, torreznos acevichados, canastas de patacón y batidas en la Avenida Reina Victoria, 17. Con terraza.">
   <meta name="author" content="ChimiGO Urban Food">
   <meta name="theme-color" content="#b91c1c">
 
@@ -13,7 +13,7 @@
   <meta property="og:locale" content="es_ES">
   <meta property="og:site_name" content="ChimiGO Urban Food">
   <meta property="og:title" content="ChimiGO Urban Food | Chimi · Fútbol · Música en Cuatro Caminos">
-  <meta property="og:description" content="El auténtico chimi dominicano en la Avenida Reina Victoria, 17 (Madrid). Chimis, quipes, chicharrón con yuca y batidos naturales.">
+  <meta property="og:description" content="El auténtico chimi dominicano en la Avenida Reina Victoria, 17 (Madrid). Chimis, torreznos acevichados, canastas de patacón y batidas.">
   <meta name="twitter:card" content="summary">
 
   <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
@@ -100,11 +100,11 @@
       <div class="container">
         <h2>Nuestro menú</h2>
         <div class="menu-tabs" role="tablist" aria-label="Categorías del menú" data-menu-tabs></div>
-        <div class="menu-grid" id="menu-lista" role="tabpanel" data-menu-lista></div>
+        <div class="menu-sections" id="menu-lista" role="tabpanel" data-menu-lista></div>
         <noscript>
           <p class="menu-noscript">Activa JavaScript para ver la carta o pásate por el local.</p>
         </noscript>
-        <p class="menu-note">Consulta los alérgenos en el local.</p>
+        <p class="menu-note">Precios orientativos. Consulta la carta y los alérgenos en el local.</p>
       </div>
     </section>
 
@@ -225,6 +225,10 @@
       <h2 id="ficha-titulo" data-ficha-nombre></h2>
       <p class="dish-desc" data-ficha-desc></p>
       <p class="dish-allergens" data-ficha-alergenos></p>
+      <fieldset class="dish-extras" data-ficha-extras hidden>
+        <legend>Añade extras <span>(opcional)</span></legend>
+        <div class="dish-extras-list" data-ficha-extras-lista></div>
+      </fieldset>
       <div class="dish-actions">
         <p class="dish-price" data-ficha-precio></p>
         <div class="qty" role="group" aria-label="Cantidad">

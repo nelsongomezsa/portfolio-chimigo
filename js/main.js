@@ -182,6 +182,7 @@
 
     var listaDelivery = document.querySelector("[data-delivery]");
     if (listaDelivery) {
+      var primero = listaDelivery.firstChild;
       delivery.forEach(function (p) {
         var li = document.createElement("li");
         var a = document.createElement("a");
@@ -189,9 +190,9 @@
         a.href = cfg.pedidos[p.clave];
         a.target = "_blank";
         a.rel = "noopener noreferrer";
-        a.textContent = p.nombre;
+        a.textContent = "Pedir en " + p.nombre;
         li.append(a);
-        listaDelivery.append(li);
+        listaDelivery.insertBefore(li, primero);
       });
     }
 

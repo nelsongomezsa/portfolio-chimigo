@@ -21,6 +21,12 @@
     porId[p.id] = p;
   });
 
+  var extras = carta.extras || [];
+  var extraPorId = {};
+  extras.forEach(function (e) {
+    extraPorId[e.id] = e;
+  });
+
   function $(selector, raiz) {
     return (raiz || document).querySelector(selector);
   }
@@ -51,8 +57,8 @@
 
   // Marcador con el nombre del plato; si la foto existe, la tapa al cargar.
   function media(plato, grande) {
-    var categoria = carta.categorias.indexOf(plato.categoria);
-    var figura = crear("div", "menu-media menu-media--cat" + Math.max(categoria, 0) + (grande ? " menu-media--grande" : ""));
+    var categoria = Math.max(carta.categorias.indexOf(plato.categoria), 0) % 3;
+    var figura = crear("div", "menu-media menu-media--cat" + categoria + (grande ? " menu-media--grande" : ""));
     var marcador = crear("div", "menu-media-marcador");
     marcador.setAttribute("aria-hidden", "true");
     marcador.append(crear("span", "menu-media-cat", plato.categoria), crear("span", "menu-media-nombre", plato.nombre));
@@ -77,6 +83,22 @@
 
   // ---------- Carrito: estado ----------
 
+  // Cada línea se guarda con una clave "plato+extra+extra", de modo que el mismo plato
+  // con distintos extras ocupa líneas distintas.
+  function clave(id, idsExtras) {
+    return [id].concat(idsExtras.slice().sort()).join("+");
+  }
+
+  function desdeClave(k) {
+    var partes = k.split("+");
+    var plato = porId[partes[0]];
+    var lista = partes.slice(1).map(function (id) {
+      return extraPorId[id];
+    });
+    if (!plato || lista.some(function (e) { return !e; }) || (lista.length && !plato.extras)) return null;
+    return { plato: plato, extras: lista };
+  }
+
   var estado = leer();
 
   function leer() {
@@ -85,9 +107,9 @@
       var guardado = JSON.parse(localStorage.getItem(CLAVE_GUARDADO));
       if (!guardado || typeof guardado !== "object") return vacio;
       var lineas = {};
-      Object.keys(guardado.lineas || {}).forEach(function (id) {
-        var n = parseInt(guardado.lineas[id], 10);
-        if (porId[id] && n > 0) lineas[id] = Math.min(n, MAX_CANTIDAD);
+      Object.keys(guardado.lineas || {}).forEach(function (k) {
+        var n = parseInt(guardado.lineas[k], 10);
+        if (desdeClave(k) && n > 0) lineas[k] = Math.min(n, MAX_CANTIDAD);
       });
       return {
         lineas: lineas,
@@ -107,14 +129,27 @@
     }
   }
 
+  function precioUnidad(plato, lista) {
+    return lista.reduce(function (total, e) {
+      return total + e.precio;
+    }, plato.precio);
+  }
+
+  function nombreLinea(l) {
+    if (!l.extras.length) return l.plato.nombre;
+    return l.plato.nombre + " (+ " + l.extras.map(function (e) { return e.nombre; }).join(", ") + ")";
+  }
+
   function lineas() {
-    return carta.platos
-      .filter(function (p) {
-        return estado.lineas[p.id];
+    return Object.keys(estado.lineas)
+      .map(function (k) {
+        var d = desdeClave(k);
+        if (!d) return null;
+        var unidad = precioUnidad(d.plato, d.extras);
+        var cantidad = estado.lineas[k];
+        return { clave: k, plato: d.plato, extras: d.extras, unidad: unidad, cantidad: cantidad, subtotal: unidad * cantidad };
       })
-      .map(function (p) {
-        return { plato: p, cantidad: estado.lineas[p.id], subtotal: p.precio * estado.lineas[p.id] };
-      });
+      .filter(Boolean);
   }
 
   function resumen() {
@@ -128,18 +163,19 @@
     );
   }
 
-  function fijarCantidad(id, cantidad) {
+  function fijarCantidad(k, cantidad) {
     cantidad = Math.max(0, Math.min(MAX_CANTIDAD, cantidad));
-    if (cantidad) estado.lineas[id] = cantidad;
-    else delete estado.lineas[id];
+    if (cantidad) estado.lineas[k] = cantidad;
+    else delete estado.lineas[k];
     guardar();
     pintarCarrito();
   }
 
-  function anadir(id, cantidad) {
-    var plato = porId[id];
-    fijarCantidad(id, (estado.lineas[id] || 0) + cantidad);
-    anunciar("Añadido: " + cantidad + " × " + plato.nombre + ". Total del pedido: " + precio(resumen().total));
+  function anadir(id, idsExtras, cantidad) {
+    var k = clave(id, idsExtras);
+    fijarCantidad(k, (estado.lineas[k] || 0) + cantidad);
+    var d = desdeClave(k);
+    anunciar("Añadido: " + cantidad + " × " + nombreLinea(d) + ". Total del pedido: " + precio(resumen().total));
     animarBoton();
   }
 
@@ -149,14 +185,14 @@
     var r = resumen();
     var texto = ["¡Hola, " + (cfg.nombre || "") + "! Quiero hacer un pedido:", ""];
     lineas().forEach(function (l) {
-      texto.push("• " + l.cantidad + " × " + l.plato.nombre + " — " + precio(l.subtotal));
+      texto.push("• " + l.cantidad + " × " + nombreLinea(l) + " — " + precio(l.subtotal));
     });
     texto.push("", "Total orientativo: " + precio(r.total));
     texto.push("Modalidad: " + MODOS[estado.modo]);
     if (estado.nota.trim()) texto.push("Nota: " + estado.nota.trim());
     texto.push("", "¿Me confirmáis el total y cuándo estará listo? ¡Gracias!");
     // Intl usa espacios de no separación; se cambian por espacios normales para WhatsApp.
-    return texto.join("\n").replace(/ /g, " ");
+    return texto.join("\n").replace(/\u00a0/g, " ");
   }
 
   function urlWhatsApp() {
@@ -182,7 +218,7 @@
       abrirFicha(plato);
     });
 
-    var titulo = crear("h3");
+    var titulo = crear("h4");
     titulo.append(abrir);
 
     var cuerpo = crear("div", "menu-card-body");
@@ -193,7 +229,8 @@
       });
       cuerpo.append(etiquetas);
     }
-    cuerpo.append(titulo, crear("p", "", plato.descripcion));
+    cuerpo.append(titulo);
+    if (plato.descripcion) cuerpo.append(crear("p", "", plato.descripcion));
 
     var pie = crear("div", "menu-card-foot");
     var boton = crear("button", "btn btn-primary btn-small btn-add");
@@ -201,7 +238,7 @@
     boton.innerHTML = '<span aria-hidden="true">+</span> Añadir';
     boton.setAttribute("aria-label", "Añadir " + plato.nombre + " al pedido");
     boton.addEventListener("click", function () {
-      anadir(plato.id, 1);
+      anadir(plato.id, [], 1);
       confirmar(boton);
     });
     pie.append(crear("span", "price", precio(plato.precio)), boton);
@@ -222,9 +259,26 @@
     }, 1400);
   }
 
+  function pintarCarta() {
+    carta.categorias.forEach(function (nombre) {
+      var platos = carta.platos.filter(function (p) {
+        return p.categoria === nombre;
+      });
+      if (!platos.length) return;
+      var seccion = crear("section", "menu-category");
+      seccion.dataset.categoria = nombre;
+      var rejilla = crear("div", "menu-grid");
+      platos.forEach(function (p) {
+        rejilla.append(tarjeta(p));
+      });
+      seccion.append(crear("h3", "menu-category-title", nombre), rejilla);
+      lista.append(seccion);
+    });
+  }
+
   function filtrar(categoria) {
-    lista.querySelectorAll(".menu-card").forEach(function (t) {
-      t.hidden = categoria !== "Todo" && t.dataset.categoria !== categoria;
+    lista.querySelectorAll(".menu-category").forEach(function (s) {
+      s.hidden = categoria !== "Todo" && s.dataset.categoria !== categoria;
     });
   }
 
@@ -272,11 +326,36 @@
   var fichaCantidad = 1;
   var foco = null;
 
+  function extrasElegidos() {
+    return Array.prototype.map.call(ficha.querySelectorAll("[data-ficha-extras] input:checked"), function (i) {
+      return extraPorId[i.value];
+    });
+  }
+
   function pintarFicha() {
+    var unidad = precioUnidad(fichaPlato, extrasElegidos());
     $("[data-ficha-cantidad]", ficha).textContent = fichaCantidad;
     $("[data-ficha-menos]", ficha).disabled = fichaCantidad <= 1;
     $("[data-ficha-mas]", ficha).disabled = fichaCantidad >= MAX_CANTIDAD;
-    $("[data-ficha-anadir]", ficha).textContent = "Añadir · " + precio(fichaPlato.precio * fichaCantidad);
+    $("[data-ficha-precio]", ficha).textContent = precio(unidad);
+    $("[data-ficha-anadir]", ficha).textContent = "Añadir · " + precio(unidad * fichaCantidad);
+  }
+
+  function pintarExtras(plato) {
+    var grupo = $("[data-ficha-extras]", ficha);
+    var contenedor = $("[data-ficha-extras-lista]", ficha);
+    contenedor.replaceChildren();
+    grupo.hidden = !(plato.extras && extras.length);
+    if (grupo.hidden) return;
+    extras.forEach(function (e) {
+      var etiqueta = crear("label", "dish-extra");
+      var casilla = crear("input");
+      casilla.type = "checkbox";
+      casilla.value = e.id;
+      casilla.addEventListener("change", pintarFicha);
+      etiqueta.append(casilla, crear("span", "dish-extra-name", e.nombre), crear("span", "dish-extra-price", "+ " + precio(e.precio)));
+      contenedor.append(etiqueta);
+    });
   }
 
   function abrirFicha(plato) {
@@ -287,7 +366,8 @@
     $("[data-ficha-cat]", ficha).textContent = plato.categoria;
     $("[data-ficha-nombre]", ficha).textContent = plato.nombre;
     $("[data-ficha-desc]", ficha).textContent = plato.descripcion;
-    $("[data-ficha-precio]", ficha).textContent = precio(plato.precio);
+    $("[data-ficha-desc]", ficha).hidden = !plato.descripcion;
+    pintarExtras(plato);
     $("[data-ficha-alergenos]", ficha).textContent =
       plato.alergenos && plato.alergenos.length
         ? "Alérgenos: " + plato.alergenos.join(", ") + "."
@@ -306,7 +386,13 @@
       pintarFicha();
     });
     $("[data-ficha-anadir]", ficha).addEventListener("click", function () {
-      anadir(fichaPlato.id, fichaCantidad);
+      anadir(
+        fichaPlato.id,
+        extrasElegidos().map(function (e) {
+          return e.id;
+        }),
+        fichaCantidad
+      );
       ficha.close();
     });
     prepararDialogo(ficha);
@@ -352,36 +438,41 @@
     lineas().forEach(function (l) {
       var li = crear("li", "cart-line");
       var info = crear("div", "cart-line-info");
-      info.append(crear("span", "cart-line-name", l.plato.nombre), crear("span", "cart-line-unit", precio(l.plato.precio) + " / ud."));
+      var nombre = nombreLinea(l);
+      info.append(crear("span", "cart-line-name", l.plato.nombre));
+      if (l.extras.length) {
+        info.append(crear("span", "cart-line-extras", "+ " + l.extras.map(function (e) { return e.nombre; }).join(", ")));
+      }
+      info.append(crear("span", "cart-line-unit", precio(l.unidad) + " / ud."));
 
       var cantidad = crear("div", "qty qty--small");
       cantidad.setAttribute("role", "group");
-      cantidad.setAttribute("aria-label", "Cantidad de " + l.plato.nombre);
+      cantidad.setAttribute("aria-label", "Cantidad de " + nombre);
       var menos = crear("button", "qty-btn", "−");
       menos.type = "button";
-      menos.setAttribute("aria-label", "Quitar una unidad de " + l.plato.nombre);
+      menos.setAttribute("aria-label", "Quitar una unidad de " + nombre);
       menos.addEventListener("click", function () {
-        fijarCantidad(l.plato.id, l.cantidad - 1);
-        devolverFoco(l.plato.id, "menos");
+        fijarCantidad(l.clave, l.cantidad - 1);
+        devolverFoco(l.clave, "menos");
       });
       var mas = crear("button", "qty-btn", "+");
       mas.type = "button";
       mas.disabled = l.cantidad >= MAX_CANTIDAD;
-      mas.setAttribute("aria-label", "Añadir una unidad de " + l.plato.nombre);
+      mas.setAttribute("aria-label", "Añadir una unidad de " + nombre);
       mas.addEventListener("click", function () {
-        fijarCantidad(l.plato.id, l.cantidad + 1);
-        devolverFoco(l.plato.id, "mas");
+        fijarCantidad(l.clave, l.cantidad + 1);
+        devolverFoco(l.clave, "mas");
       });
-      menos.dataset.foco = l.plato.id + "-menos";
-      mas.dataset.foco = l.plato.id + "-mas";
+      menos.dataset.foco = l.clave + "-menos";
+      mas.dataset.foco = l.clave + "-mas";
       cantidad.append(menos, crear("span", "qty-value", String(l.cantidad)), mas);
 
       var quitar = crear("button", "cart-line-remove", "Quitar");
       quitar.type = "button";
-      quitar.setAttribute("aria-label", "Quitar " + l.plato.nombre + " del pedido");
+      quitar.setAttribute("aria-label", "Quitar " + nombre + " del pedido");
       quitar.addEventListener("click", function () {
-        fijarCantidad(l.plato.id, 0);
-        anunciar(l.plato.nombre + " quitado del pedido");
+        fijarCantidad(l.clave, 0);
+        anunciar(nombre + " quitado del pedido");
         var siguiente = $(".cart-line-remove", carrito) || $("[data-cerrar]", carrito);
         siguiente.focus();
       });
@@ -479,9 +570,7 @@
 
   if (!lista || !pestanas || !ficha || !carrito || !fab || !has) return;
 
-  carta.platos.forEach(function (p) {
-    lista.append(tarjeta(p));
-  });
+  pintarCarta();
   pintarPestanas();
   iniciarFicha();
   iniciarCarrito();
