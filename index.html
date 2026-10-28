@@ -25,7 +25,9 @@
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Fredoka:wght@500;600&display=swap"></noscript>
 
   <script src="js/config.js" defer></script>
+  <script src="js/menu.js" defer></script>
   <script src="js/main.js" defer></script>
+  <script src="js/carta.js" defer></script>
 </head>
 <body>
 
@@ -96,51 +98,12 @@
     <section id="menu" class="menu">
       <div class="container">
         <h2>Nuestro menú</h2>
-        <div class="menu-grid">
-
-          <article class="menu-card">
-            <img src="https://picsum.photos/seed/chimipierna/400/300" width="400" height="300" loading="lazy" decoding="async" alt="Chimi de pierna de cerdo con col, tomate y salsas en pan tostado">
-            <h3>Chimi de Pierna</h3>
-            <p>Pierna de cerdo sazonada a la parrilla, col, tomate y salsa de la casa en pan tostado.</p>
-            <span class="price">6,50 €</span>
-          </article>
-
-          <article class="menu-card">
-            <img src="https://picsum.photos/seed/chimiternera/400/300" width="400" height="300" loading="lazy" decoding="async" alt="Chimi clásico de ternera con ensalada">
-            <h3>Chimi de Ternera</h3>
-            <p>La versión clásica: ternera picada, especias dominicanas y salsa suave.</p>
-            <span class="price">6,00 €</span>
-          </article>
-
-          <article class="menu-card">
-            <img src="https://picsum.photos/seed/quipes/400/300" width="400" height="300" loading="lazy" decoding="async" alt="Quipes dominicanos, bocaditos de trigo rellenos de carne">
-            <h3>Quipes</h3>
-            <p>Bocaditos crujientes de trigo rellenos de carne especiada, fritos al momento.</p>
-            <span class="price">4,50 €</span>
-          </article>
-
-          <article class="menu-card">
-            <img src="https://picsum.photos/seed/torreznos/400/300" width="400" height="300" loading="lazy" decoding="async" alt="Chicharrón crujiente con yuca hervida y cebolla">
-            <h3>Chicharrón con Yuca</h3>
-            <p>Chicharrón crujiente acompañado de yuca hervida y un toque ácido de cebolla.</p>
-            <span class="price">7,00 €</span>
-          </article>
-
-          <article class="menu-card">
-            <img src="https://picsum.photos/seed/batidomoririsonando/400/300" width="400" height="300" loading="lazy" decoding="async" alt="Batido dominicano Morir Soñando, de naranja y leche">
-            <h3>Batido Morir Soñando</h3>
-            <p>Naranja y leche condensada bien fría. El postre líquido más querido de RD.</p>
-            <span class="price">3,50 €</span>
-          </article>
-
-          <article class="menu-card">
-            <img src="https://picsum.photos/seed/batidoguanabana/400/300" width="400" height="300" loading="lazy" decoding="async" alt="Batido natural de guanábana">
-            <h3>Batido de Guanábana</h3>
-            <p>Fruta tropical natural, cremoso y refrescante, sin azúcares añadidos.</p>
-            <span class="price">3,50 €</span>
-          </article>
-
-        </div>
+        <div class="menu-tabs" role="tablist" aria-label="Categorías del menú" data-menu-tabs></div>
+        <div class="menu-grid" id="menu-lista" role="tabpanel" data-menu-lista></div>
+        <noscript>
+          <p class="menu-noscript">Activa JavaScript para ver la carta o pásate por el local.</p>
+        </noscript>
+        <p class="menu-note">Consulta los alérgenos en el local.</p>
       </div>
     </section>
 
@@ -233,6 +196,78 @@
       </ul>
     </div>
   </footer>
+
+  <dialog class="dish-dialog" id="ficha" aria-labelledby="ficha-titulo">
+    <button type="button" class="dialog-close" data-cerrar aria-label="Cerrar la ficha">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <div data-ficha-media></div>
+    <div class="dish-body">
+      <p class="dish-cat" data-ficha-cat></p>
+      <h2 id="ficha-titulo" data-ficha-nombre></h2>
+      <p class="dish-desc" data-ficha-desc></p>
+      <p class="dish-allergens" data-ficha-alergenos></p>
+      <div class="dish-actions">
+        <p class="dish-price" data-ficha-precio></p>
+        <div class="qty" role="group" aria-label="Cantidad">
+          <button type="button" class="qty-btn" data-ficha-menos aria-label="Una unidad menos">&minus;</button>
+          <span class="qty-value" data-ficha-cantidad aria-live="polite">1</span>
+          <button type="button" class="qty-btn" data-ficha-mas aria-label="Una unidad más">+</button>
+        </div>
+      </div>
+      <button type="button" class="btn btn-primary btn-block" data-ficha-anadir>Añadir</button>
+    </div>
+  </dialog>
+
+  <button type="button" class="cart-fab" data-carrito-abrir aria-haspopup="dialog" hidden>
+    <svg aria-hidden="true" viewBox="0 0 24 24" width="22" height="22"><path d="M6 7h12l-1 13H7L6 7Z M9 7a3 3 0 0 1 6 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+    <span class="cart-fab-count" data-fab-cuenta>0</span>
+    <span class="cart-fab-total" data-fab-total>0,00 €</span>
+  </button>
+
+  <dialog class="cart" id="carrito" aria-labelledby="carrito-titulo">
+    <div class="cart-inner">
+      <div class="cart-head">
+        <div>
+          <h2 id="carrito-titulo">Tu pedido</h2>
+          <p class="cart-count" data-carrito-cuenta></p>
+        </div>
+        <button type="button" class="dialog-close" data-cerrar aria-label="Cerrar el pedido">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="cart-body">
+        <div class="cart-empty" data-carrito-vacio>
+          <p>Todavía no has añadido nada.</p>
+          <button type="button" class="btn btn-primary" data-carrito-ver-menu>Ver el menú</button>
+        </div>
+        <ul class="cart-lines" data-carrito-lineas></ul>
+
+        <div class="cart-options" data-carrito-opciones>
+          <fieldset class="cart-mode">
+            <legend>¿Cómo lo quieres?</legend>
+            <label><input type="radio" name="modo" value="recoger" checked> Para recoger</label>
+            <label><input type="radio" name="modo" value="local"> Para tomar en el local</label>
+          </fieldset>
+          <label class="cart-note-label" for="carrito-nota">Nota para el local <span>(opcional)</span></label>
+          <textarea id="carrito-nota" rows="2" maxlength="300" placeholder="Sin cebolla, salsa aparte…"></textarea>
+        </div>
+      </div>
+
+      <div class="cart-foot" data-carrito-pie>
+        <p class="cart-total"><span>Total</span> <strong data-carrito-total>0,00 €</strong></p>
+        <p class="cart-notice">El total es orientativo: el local te confirmará el precio final.</p>
+        <a class="btn btn-whatsapp btn-block" data-carrito-whatsapp target="_blank" rel="noopener noreferrer" hidden>
+          <svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20"><path d="M4 20l1.3-4A8 8 0 1 1 8 18.7L4 20Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+          Pedir por WhatsApp
+        </a>
+        <p class="cart-alt" data-carrito-alternativa hidden>Pide en el local o por <a href="https://www.instagram.com/chimi.go/" data-href="instagram" target="_blank" rel="noopener noreferrer">Instagram</a>.</p>
+      </div>
+    </div>
+  </dialog>
+
+  <p class="visually-hidden" role="status" data-aviso></p>
 
   <nav class="mobile-bar" aria-label="Acciones rápidas">
     <a href="#pedir" class="mobile-bar-item" data-requiere="pedir" hidden>

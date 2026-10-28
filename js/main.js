@@ -311,6 +311,9 @@
 
   // ---------- Arranque ----------
 
+  // Compartido con js/carta.js
+  window.ChimiGo = { has: has, enlaces: enlaces };
+
   pintarDatos();
   iniciarMenu();
   iniciarFotoPortada();
