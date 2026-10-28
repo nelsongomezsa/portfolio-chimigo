@@ -55,7 +55,7 @@
 
   // ---------- Foto o marcador ----------
 
-  // Marcador con el nombre del plato; si la foto existe, la tapa al cargar.
+  // Marcador con el nombre del plato; si hay foto, la tapa al cargar (WebP con JPG de respaldo).
   function media(plato, grande) {
     var categoria = Math.max(carta.categorias.indexOf(plato.categoria), 0) % 3;
     var figura = crear("div", "menu-media menu-media--cat" + categoria + (grande ? " menu-media--grande" : ""));
@@ -64,19 +64,25 @@
     marcador.append(crear("span", "menu-media-cat", plato.categoria), crear("span", "menu-media-nombre", plato.nombre));
     figura.append(marcador);
 
-    if (plato.imagen) {
-      var img = new Image(800, 600);
-      img.alt = plato.alt || plato.nombre;
+    var foto = plato.foto;
+    if (foto) {
+      var picture = document.createElement("picture");
+      var webp = document.createElement("source");
+      webp.type = "image/webp";
+      webp.srcset = foto.webp;
+      var img = new Image(foto.ancho, foto.alto);
+      img.alt = plato.nombre;
       img.loading = grande ? "eager" : "lazy";
       img.decoding = "async";
       img.onload = function () {
         figura.classList.add("menu-media--foto");
       };
       img.onerror = function () {
-        img.remove();
+        picture.remove();
       };
-      img.src = plato.imagen;
-      figura.append(img);
+      img.src = foto.jpg;
+      picture.append(webp, img);
+      figura.append(picture);
     }
     return figura;
   }

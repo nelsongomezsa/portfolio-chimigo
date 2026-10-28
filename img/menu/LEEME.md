@@ -1,54 +1,32 @@
 # Fotos de la carta
 
-Cada plato busca aquí su foto con este nombre (definido en `js/menu.js`). Si falta, la web muestra un marcador con el nombre del plato.
+Los originales (descargados de la ficha de Glovo con permiso del local) están en `originales/`. Esa carpeta no se sube a git.
+La web usa versiones optimizadas: WebP de 800 px como máximo, con calidad 80, más un JPG de respaldo. Cada plato las enlaza en el campo `foto` de `js/menu.js`.
 
-Formato recomendado: 800 × 600 px (4:3), JPG de menos de 150 KB.
+## Añadir o cambiar una foto
 
-## Entrantes
+1. Guarda el original en `originales/`.
+2. Genera las dos versiones (sin ampliar fotos de menos de 800 px):
 
-- canasta-de-torreznos.jpg — Canasta De Torreznos
-- canasta-de-costillas.jpg — Canasta De Costillas
-- arepitas.jpg — Arepitas
-- patatas-con-cheddar-y-bacon.jpg — Patatas Con Cheddar y Bacon
-- nuggets-de-pollo.jpg — Nuggets De Pollo
-- tequenos.jpg — Tequeños
+   ```bash
+   cwebp -q 80 -resize 800 0 -metadata none originales/plato.jpg -o plato.webp
+   sips -s format jpeg -s formatOptions 80 --resampleWidth 800 originales/plato.jpg --out plato.jpg
+   ```
 
-## Chimis Pan De Agua
+3. En `js/menu.js`, pon en ese plato `foto: { webp: "img/menu/plato.webp", jpg: "img/menu/plato.jpg", ancho: 800, alto: 800 }`.
 
-- balon-de-oro-clasico.jpg — Balón De Oro Clásico
-- balon-de-oro-pierna.jpg — Balón De Oro Pierna
-- chimi-de-pollo.jpg — Chimi De Pollo
-- chimi-de-pierna.jpg — Chimi De Pierna
-- chimi-clasico.jpg — Chimi Clásico
-- chimi-de-salami.jpg — Chimi De Salami
+Con `foto: null`, la web muestra un marcador con el nombre del plato.
 
-## Sándwich
+Las seis batidas de fruta de la ficha de Glovo usaban la misma foto genérica: está una sola vez, en `batidas.webp` y `batidas.jpg`.
 
-- sandwich-de-pollo.jpg — Sándwich de Pollo
+## Platos que aún no tienen foto
 
-## Para Compartir
-
-- torreznos-acevichados.jpg — Torreznos Acevichados
-- darys-nachos.jpg — Dary's Nachos
-- chimiquesadilla.jpg — Chimiquesadilla
-- alitas-de-pollo-fritas-racion.jpg — Alitas De Pollo Fritas (ración)
-- huevos-rotos-con-jamon.jpg — Huevos Rotos Con Jamón
-- torreznos-de-soria.jpg — Torreznos De Soria
-- salchipapas.jpg — Salchipapas
-
-## Postres
-
-- helado-de-batata-y-coco.jpg — Helado De Batata Y Coco
-
-## Batidas
-
-- limonada-de-coco.jpg — Limonada de Coco
-- morir-sonando.jpg — Morir Soñando
-- papaya.jpg — Papaya
-- mango.jpg — Mango
-- limonada.jpg — Limonada
-- maracuya.jpg — Maracuyá
-- tamarindo.jpg — Tamarindo
-- fresa.jpg — Fresa
-- guanabana.jpg — Guanábana
-- pina.jpg — Piña
+- Canasta De Costillas (canasta-de-costillas)
+- Balón De Oro Pierna (balon-de-oro-pierna)
+- Chimi De Pollo (chimi-de-pollo)
+- Chimi De Pierna (chimi-de-pierna)
+- Chimi Clásico (chimi-clasico)
+- Morir Soñando (morir-sonando)
+- Papaya (papaya)
+- Limonada (limonada)
+- Fresa (fresa)

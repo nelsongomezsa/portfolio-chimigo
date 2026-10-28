@@ -281,10 +281,32 @@ main:focus {
   text-align: center;
 }
 
+/* Foto de portada con capa oscura; sin foto (quitando la clase) queda el degradado. */
 .hero--foto {
+  background-color: var(--color-dark);
   background-image:
-    linear-gradient(180deg, rgba(36, 28, 21, 0.55), rgba(36, 28, 21, 0.75)),
+    linear-gradient(180deg, rgba(36, 28, 21, 0.62), rgba(36, 28, 21, 0.82)),
     url("../img/hero.jpg");
+  background-image:
+    linear-gradient(180deg, rgba(36, 28, 21, 0.62), rgba(36, 28, 21, 0.82)),
+    image-set(url("../img/hero.webp") type("image/webp"), url("../img/hero.jpg") type("image/jpeg"));
+}
+
+@media (max-width: 800px) {
+  .hero--foto {
+    background-image:
+      linear-gradient(180deg, rgba(36, 28, 21, 0.62), rgba(36, 28, 21, 0.82)),
+      url("../img/hero-movil.jpg");
+    background-image:
+      linear-gradient(180deg, rgba(36, 28, 21, 0.62), rgba(36, 28, 21, 0.82)),
+      image-set(url("../img/hero-movil.webp") type("image/webp"), url("../img/hero-movil.jpg") type("image/jpeg"));
+  }
+}
+
+.hero--foto h1,
+.hero--foto .hero-lead,
+.hero--foto .hero-facts {
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.45);
 }
 
 .hero-eyebrow {
@@ -546,6 +568,11 @@ main:focus {
   aspect-ratio: 4 / 3;
   overflow: hidden;
   background-color: var(--color-primary-deep);
+}
+
+.menu-media picture {
+  position: absolute;
+  inset: 0;
 }
 
 .menu-media img {

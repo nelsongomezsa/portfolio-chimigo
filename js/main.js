@@ -251,19 +251,6 @@
     });
   }
 
-  // ---------- Foto de portada ----------
-
-  // Si existe img/hero.jpg se usa como fondo; si no, se queda el degradado.
-  function iniciarFotoPortada() {
-    var hero = document.querySelector(".hero");
-    if (!hero) return;
-    var foto = new Image();
-    foto.onload = function () {
-      hero.classList.add("hero--foto");
-    };
-    foto.src = "img/hero.jpg";
-  }
-
   // ---------- Datos estructurados ----------
 
   function datosEstructurados() {
@@ -290,6 +277,7 @@
     if (has(cfg.web)) {
       datos.url = cfg.web;
       datos.menu = cfg.web + "#menu";
+      datos.image = cfg.web + "img/og.jpg";
     }
     if (has(c.lat) && has(c.lng)) {
       datos.geo = { "@type": "GeoCoordinates", latitude: c.lat, longitude: c.lng };
@@ -325,7 +313,6 @@
 
   pintarDatos();
   iniciarMenu();
-  iniciarFotoPortada();
   datosEstructurados();
 
   document.querySelectorAll("[data-anio]").forEach(function (el) {
