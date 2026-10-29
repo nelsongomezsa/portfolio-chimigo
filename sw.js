@@ -4,7 +4,7 @@
  * - Resto de archivos (CSS, JS, fotos, fuentes): se sirve la copia guardada y se actualiza en segundo plano.
  * Al publicar cambios importantes, sube VERSION para que todos reciban los archivos nuevos.
  */
-var VERSION = "chimigo-v1";
+var VERSION = "chimigo-v2";
 
 var ESENCIALES = [
   "./",

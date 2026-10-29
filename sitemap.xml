@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- PENDIENTE: sustituir https://DOMINIO/ por la URL pública de la web (la misma que "web" en js/config.js). -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://DOMINIO/</loc>
+    <loc>https://nelsongomezsa.github.io/portfolio-chimigo/</loc>
     <lastmod>2026-10-29</lastmod>
     <changefreq>monthly</changefreq>
   </url>

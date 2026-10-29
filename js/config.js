@@ -11,7 +11,7 @@ window.CHIMIGO = {
   tipoCocina: "Dominicana",
 
   // URL pública de la web, con https:// y barra final. Se usa en SEO y datos estructurados.
-  web: "",
+  web: "https://nelsongomezsa.github.io/portfolio-chimigo/",
 
   direccion: {
     calle: "Avenida Reina Victoria, 17",
