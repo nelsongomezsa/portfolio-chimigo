@@ -115,4 +115,8 @@ docs/                capturas y carta original de Glovo (carta-glovo.json)
 
 ## Autor
 
-**Nelson Gómez Sánchez** · Estudiante de DAM y del Máster en Data & Analytics · [nelsongomezsa.github.io](https://nelsongomezsa.github.io)
+**Nelson Gómez Sánchez** · Desarrollo de software y datos · Java, SQL y Python · Buscando prácticas en IT en Madrid desde febrero de 2027 · [nelsongomezsa.github.io](https://nelsongomezsa.github.io)
+
+## Derechos
+
+Todos los derechos reservados. Las fotos, el logotipo y la marca ChimiGO Urban Food son del local y no se pueden reutilizar sin su permiso. El código está publicado para que se pueda consultar, no con una licencia de uso libre.

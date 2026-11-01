@@ -1,3 +1,9 @@
 .DS_Store
 img/menu/originales/
 img/local/originales/
+
+# Configuración local de herramientas: no se versiona
+.claude/
+CLAUDE.md
+.codex/
+AGENTS.md
